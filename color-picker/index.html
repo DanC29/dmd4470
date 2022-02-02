@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Color Picker</title>
+  </head>
+  <body>
+    <main id="main-bg">
+      <div class="container bio">
+        <div class="row justify-content-center p-2">
+          <div class="col-lg-8 text-center">
+            <h1>Spongebob</h1>
+          </div>
+        </div>
+        <div class="row justify-content-evenly align-items-center p-1">
+          <div class="col-md-4">
+            <p>
+              A square yellow sponge named SpongeBob SquarePants lives in a
+              pineapple with his pet snail, Gary, in the city of Bikini Bottom
+              on the floor of the Pacific Ocean. He works as a fry cook at the
+              Krusty Krab. During his time off, SpongeBob has a knack for
+              attracting trouble with his starfish best friend, Patrick.
+              Arrogant octopus Squidward Tentacles, SpongeBob's neighbor,
+              dislikes SpongeBob because of his childlike behavior.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <img src="spongebob.jpeg" alt="Spongebob" id="img" />
+          </div>
+        </div>
+      </div>
+      <div class="container user-inputs">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <input
+              type="button"
+              id="template"
+              value="Switch Presets"
+              onclick="presetTemplates()"
+            />
+            <input type="color" id="colorInput" value="#03a4cd" />
+            <input
+              type="button"
+              id="colorButton"
+              value="Click to Change"
+              onclick="changeColor()"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
