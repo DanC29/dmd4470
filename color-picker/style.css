@@ -1,0 +1,27 @@
+body {
+  background-color: white;
+  color: white;
+}
+.preset-mode-1 {
+  background-color: chartreuse;
+  color: black;
+}
+.bio {
+  background-color: rgba(255, 255, 255, 0.275);
+  border-radius: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 5rem;
+}
+#img {
+  width: 250px;
+  height: auto;
+}
+
+.user-inputs {
+  background-color: rgba(255, 255, 255, 0.275);
+  border-radius: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 2rem;
+}
