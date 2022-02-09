@@ -1,0 +1,19 @@
+body {
+  background-color: black;
+}
+
+header {
+  margin: 2rem;
+  color: white;
+}
+.lab {
+  color: red;
+}
+.contacts {
+  background-color: #afafaf;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 25px;
+  margin: 10px;
+  border-radius: 15px;
+}
