@@ -17,7 +17,6 @@ function getBook() {
           data.contacts[i].lastname,
           data.contacts[i].title,
           data.contacts[i].email,
-          data.contacts[i].email,
           data.contacts[i].phone,
           data.contacts[i].birthdate
         );
