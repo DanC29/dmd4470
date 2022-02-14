@@ -7,21 +7,23 @@ function getBook() {
       return response.json();
     })
     .then((data) => {
-      console.log(data.contacts);
-      const people = data.contacts
-        .sort((a, b) => a.lastname.localeCompare(b.lastname))
-        .map((data) => {
-          return `<div class="contacts">
-          <h2>${data.firstname + " " + data.lastname}</h2>
-          <h3>${data.title}</h3>
-          <p>Email: ${data.email}</p>
-          <p>Phone: ${data.phone}</p>
-          <p>Birthday: ${data.birthdate}</p>
-          </div>`;
-        })
-        .join(" ");
+      console.log(data.contacts, "hello");
+      const people = data.contacts.sort((a, b) =>
+        a.lastname.localeCompare(b.lastname)
+      );
+      for (i in people) {
+        var ppl = new Person(
+          data.contacts[i].firstname,
+          data.contacts[i].lastname,
+          data.contacts[i].title,
+          data.contacts[i].email,
+          data.contacts[i].email,
+          data.contacts[i].phone,
+          data.contacts[i].birthdate
+        );
+        document.getElementById("ppl").innerHTML += ppl.displayToPage();
+      }
       console.log(people);
-      document.querySelector("#ppl").insertAdjacentHTML("afterbegin", people);
     })
     .catch(function (error) {
       console.log(error);
@@ -29,17 +31,26 @@ function getBook() {
 }
 getBook();
 
-/*   .then((response) => response.json())
-  .then((data) => console.log("data is", data))
-  .catch((error) => console.log("error is", error)); */
+const cards = [];
 
-/* const data_url =
-  "https://uconndxlab.github.io/json-phonebook-example/dxlab-staff.json";
-
-async function getBook() {
-  const response = await fetch(data_url);
-  const data = await response.json();
-  console.log(data.contacts);
+class Person {
+  constructor(firstname, lastname, title, email, phone, birthdate) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.title = title;
+    this.email = email;
+    this.phone = phone;
+    this.birthdate = birthdate;
+    this.name = this.firstname + " " + this.lastname;
+    cards.push(this);
+  }
+  displayToPage() {
+    return `<div class="contacts">
+    <h2>${this.firstname + " " + this.lastname}</h2>
+    <h3>${this.title}</h3>
+    <p>Email: ${this.email}</p>
+    <p>Phone: ${this.phone}</p>
+    <p>Birthday: ${this.birthdate}</p>
+    </div>`;
+  }
 }
-
-getBook(); */
