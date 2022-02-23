@@ -24,41 +24,32 @@
   <body>
     <header>
       <div class="contianer">
-        <div class="row">
-          <div class="col">
-            <h1>Shopping List</h1>
+        <div class="row justify-content-center title">
+          <div class="col-md-8">
+            <h1 class="text-center">Shopping List</h1>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div id="add_new_item">
-              <!--               <form>
-                <input
-                  id="item-input-text"
-                  type="text"
-                  placeholder="Add New Task"
-                />
-              </form> -->
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form"
-                  id="item_input"
-                  placeholder="Enter email"
-                />
-              </div>
-              <button type="submit" id="add_new_task" class="btn btn-primary">
-                Submit
-              </button>
+        <div class="row d-flex justify-content-center">
+          <div class="col-sm-4" id="add_new_item">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form"
+                id="item_input"
+                placeholder="Enter Item"
+              />
             </div>
+            <button type="submit" id="add_new_task" class="btn btn-primary">
+              Submit
+            </button>
           </div>
         </div>
       </div>
     </header>
     <main>
       <div class="container">
-        <div class="row">
-          <div class="col" id="my_list"></div>
+        <div class="row justify-content-center">
+          <div class="col-md-8" id="my_list"></div>
         </div>
       </div>
       <!-- <div class="container">
