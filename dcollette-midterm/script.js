@@ -2,8 +2,8 @@ const item_input = document.querySelector("#item_input");
 const add_item_btn = document.querySelector("#add_new_task");
 const my_list = document.querySelector("#my_list");
 
-const new_note_text = document.querySelectorAll("input.note-input");
-const add_note_btn = document.querySelectorAll("button.note-btn");
+//const new_note_text = document.querySelectorAll("input.note-input");
+//const add_note_btn = document.querySelectorAll("button.note-btn");
 
 add_item_btn.addEventListener("click", addToDB);
 
@@ -16,6 +16,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     // CARD
     var cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
+    cardDiv.classList.add("status-" + doc.data().status);
 
     //
 
@@ -34,8 +35,9 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
 
     // ITEM NOTES LIST
     var listCont = document.createElement("ul");
-    listCont.classList.add("notes-ul");
+    listCont.classList.add("notes-ul", `${doc.id}`);
     listCont.id = "note_list";
+    /* listCont.innerHTML = `${doc.data().note}`; */
     notesDiv.appendChild(listCont);
 
     //
@@ -43,6 +45,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     // ITEM NOTES INPUT DIV
     var notesInputDiv = document.createElement("div");
     notesInputDiv.classList.add("notes", "card-body");
+    notesInputDiv.id = "note_list";
     cardDiv.appendChild(notesInputDiv);
 
     // ITEM NOTE INPUT
@@ -59,7 +62,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     noteBTN.innerHTML = "Add Note";
     noteBTN.id = "note_input_btn";
     noteBTN.addEventListener("click", function () {
-      addNote(doc.id);
+      addNote(doc.id, noteInput.value);
     });
     notesInputDiv.appendChild(noteBTN);
 
@@ -140,16 +143,17 @@ function cardComplete(id) {
     }
   });
 }
-// ADD NOTE
-function addNote(id) {
-  // var itemRef = db.collection("list_items").doc(id);
 
-  var noteContent = new_note_text.value;
+// UPDATE CARD
+
+/* function updateTask(docID, itemOBJ) {
+  var itemRef = db.collection("list_items").doc(docID);
 
   // Set the "capital" field of the city 'DC'
-  /*   return itemRef
+  return itemRef
     .update({
-      note: noteContent,
+      name: itemOBJ.name,
+      note: itemOBJ.note,
     })
     .then(() => {
       console.log("Document successfully updated!");
@@ -157,45 +161,66 @@ function addNote(id) {
     .catch((error) => {
       // The document probably doesn't exist.
       console.error("Error updating document: ", error);
-    }); */
+    });
+} */
 
+// ADD NOTE
+function addNote(id, noteContent) {
   db.collection("list_items")
     .doc(id)
-    .update({
+    .collection("notes")
+    .add({
       note: noteContent,
     })
     .then(() => {
-      console.log("Note Added");
+      console.log(
+        "Note Added",
+        db.collection("list_items").doc(id).collection("notes").doc(id),
+        noteContent
+      );
     })
     .catch((error) => {
       console.error("Error removing document: ", error);
     });
 
-  /*   const note_list = document.querySelector("#note_list");
-  db.collection("list_items").onSnapshot((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      var noteDesc = doc.data().note;
-
-      var newNote = document.createElement("li");
-      newNote.innerHTML = noteDesc;
-    });
-
-    note_list.appendChild(newNote);
-  }); */
-  /*   var new_note_name = new_note_text.value;
-
   db.collection("list_items")
-    .doc.data()
-    .id.add({
-      note: new_note_name,
-    })
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    }); */
+    .doc(id)
+    .collection("notes")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var noteList = document.getElementsByClassName(`${doc.id}`);
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+
+        var itemLI = document.createElement("li");
+        itemLI.innerHTML = doc.data().note;
+        noteList.innerHTML = itemLI.value;
+      });
+    });
 }
+
+/* db.collection("list_items").doc(id).collection("notes").onSnapshot((querySnapshot) => {
+  my_list.innerHTML = "";
+
+  querySnapshot.forEach((doc) => {
+    console.log("DOC: ", doc);
+
+    // ITEM NOTES DIV
+    var notesDiv = document.createElement("div");
+    notesDiv.classList.add("notes");
+    cardDiv.appendChild(notesDiv);
+
+    // ITEM NOTES LIST
+    var listCont = document.createElement("ul");
+    listCont.classList.add("notes-ul");
+    listCont.id = "note_list";
+    listCont.innerHTML = `${doc.data().note}`;
+    notesDiv.appendChild(listCont);
+
+    my_list.appendChild(cardDiv);
+  });
+}); */
 
 /*   var cardRef = db.collection("list_items").doc(id);
 
