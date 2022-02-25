@@ -4,6 +4,7 @@ body {
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;
+  background-attachment: scroll;
 }
 
 .header-container {
@@ -14,6 +15,12 @@ body {
   backdrop-filter: blur(2px);
 }
 
+.header-title {
+  font-family: futura-pt, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 .title {
   margin-bottom: 1rem;
   color: #002947;
@@ -21,25 +28,37 @@ body {
 
 #item_input {
   width: 100%;
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   background-color: #fff2ce;
   color: #002947;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   padding: 15px;
   border-radius: 50px;
+  transition: all 0.2s ease-in-out;
 }
 
 #item_input:focus {
   outline: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transform: scale(1.05);
 }
 
 #add_new_task {
   background-color: #002947;
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #fff2ce;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   padding: 15px;
   border-radius: 50px;
+}
+#add_new_task:hover {
+  background-color: #6abccf;
 }
 
 .card {
@@ -50,6 +69,9 @@ body {
     rgba(0, 0, 0, 0.07) 0px 16px 16px;
 }
 .card-header {
+  font-family: futura-pt-bold, sans-serif;
+  font-weight: 700;
+  font-style: normal;
   margin: 0;
   background-color: #fff2ce;
 }
@@ -64,12 +86,18 @@ body {
 }
 
 .notes-li {
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #fff2ce;
   list-style: disc;
 }
 
 #note-input-text {
   background-color: #fff2ce;
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #002947;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
@@ -85,10 +113,21 @@ body {
 #note_input_btn {
   margin: 5px;
   background-color: #fd9414;
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #002947;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   padding: 10px;
   border-radius: 50px;
+  transition: all 0.1s ease-in-out;
+}
+#note_input_btn:hover {
+  background-color: #feb938;
+}
+#note_input_btn:focus {
+  background-color: #feb938;
+  outline: none;
 }
 
 .notes {
@@ -120,16 +159,38 @@ body {
 }
 
 .card-complete {
-  background-color: rgb(35, 133, 35);
+  background-color: rgb(93, 155, 93);
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #fff2ce;
   margin: 0.5rem;
   padding: 10px;
   border-radius: 50px;
+  transition: all 0.1s ease-in-out;
+}
+.card-complete:hover {
+  background-color: rgb(18, 174, 18);
+}
+.card-complete:focus {
+  outline: none;
+  background-color: rgb(18, 174, 18);
 }
 .card-delete {
-  background-color: rgb(148, 26, 26);
+  background-color: rgb(169, 76, 76);
+  font-family: futura-pt, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: #fff2ce;
   margin: 0.5rem;
   padding: 10px;
   border-radius: 50px;
+  transition: all 0.1s ease-in-out;
+}
+.card-delete:hover {
+  background-color: rgb(211, 22, 22);
+}
+.card-delete:focus {
+  outline: none;
+  background-color: rgb(211, 22, 22);
 }
