@@ -40,7 +40,15 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     var listCont = document.createElement("ul");
     listCont.classList.add("notes-ul", `${doc.id}`);
     listCont.id = "note_list";
-    /* listCont.innerHTML = `${doc.data().note}`; */
+    if (doc.data().notesArray) {
+      doc.data().notesArray.forEach((note) => {
+        // NOTE LI
+        var noteLI = document.createElement("li");
+        noteLI.classList.add("notes-li");
+        noteLI.innerHTML = note;
+        listCont.appendChild(noteLI);
+      });
+    }
     notesDiv.appendChild(listCont);
 
     //
@@ -65,7 +73,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     noteBTN.innerHTML = "Add Note";
     noteBTN.id = "note_input_btn";
     noteBTN.addEventListener("click", function () {
-      addNote(doc.id, noteInput.value);
+      addNote(doc.id, noteInput.value, doc);
     });
     notesInputDiv.appendChild(noteBTN);
 
@@ -168,7 +176,29 @@ function cardComplete(id) {
 } */
 
 // ADD NOTE
-function addNote(id, noteContent) {
+
+function addNote(id, noteContent, doc) {
+  var noteArrayRef = db.collection("list_items").doc(id);
+
+  console.log("notesArray", doc, doc.data());
+
+  var notes = doc.data().notesArray || [];
+
+  // Set the "capital" field of the city 'DC'
+  return noteArrayRef
+    .update({
+      notesArray: [...notes, noteContent],
+    })
+    .then(() => {
+      console.log("Document successfully updated!", doc.data().noteArray);
+    })
+    .catch((error) => {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+}
+
+/* function addNote(id, noteContent) {
   db.collection("list_items")
     .doc(id)
     .collection("notes")
@@ -201,7 +231,7 @@ function addNote(id, noteContent) {
         noteList.innerHTML = itemLI.value;
       });
     });
-}
+} */
 
 /* db.collection("list_items").doc(id).collection("notes").onSnapshot((querySnapshot) => {
   my_list.innerHTML = "";

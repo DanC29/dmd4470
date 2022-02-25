@@ -58,6 +58,16 @@ body {
   background-color: #002947;
 }
 
+.notes-ul {
+  margin-bottom: 0;
+  margin-top: 15px;
+}
+
+.notes-li {
+  color: #fff2ce;
+  list-style: disc;
+}
+
 #note-input-text {
   background-color: #fff2ce;
   color: #002947;
