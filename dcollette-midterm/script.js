@@ -1,4 +1,5 @@
 const item_input = document.querySelector("#item_input");
+item_input.autocomplete = "off";
 const add_item_btn = document.querySelector("#add_new_task");
 const my_list = document.querySelector("#my_list");
 
@@ -17,7 +18,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     //
 
     // TITLE
-    var cardTitle = document.createElement("h4");
+    var cardTitle = document.createElement("h2");
     cardTitle.innerHTML = doc.data().name;
     cardTitle.classList.add(
       "card-title",
@@ -44,12 +45,33 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
         noteLI.classList.add("notes-li");
         noteLI.innerHTML = note;
         noteLI.addEventListener("click", function () {
-          noteDelete();
+          noteDelete(doc, doc.id, note);
         });
         listCont.appendChild(noteLI);
       });
+      notesDiv.appendChild(listCont);
     }
-    notesDiv.appendChild(listCont);
+    // Potential way of adding and storing note data?? / can't figure out how user would save after focus
+    /*     // ITEM NOTES LIST
+    var listCont = document.createElement("ul");
+    listCont.classList.add("notes-ul", `${doc.id}`);
+    listCont.id = "note_list";
+    if (doc.data().notesArray) {
+      doc.data().notesArray.forEach((note) => {
+        // NOTE LI
+        var noteLI = document.createElement("li");
+        noteLI.classList.add("notes-li");
+        // EDIT INPUT
+        var editNote = document.createElement("input");
+        editNote.setAttribute("type", "text");
+        editNote.setAttribute("value", note);
+        editNote.classList.add("edit-note");
+        noteLI.appendChild(editNote);
+
+        listCont.appendChild(noteLI);
+      });
+    }
+    notesDiv.appendChild(listCont); */
 
     //
 
@@ -62,7 +84,8 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     // ITEM NOTE INPUT
     var noteInput = document.createElement("input");
     noteInput.setAttribute("type", "text");
-    noteInput.setAttribute("value", "Add Note");
+    noteInput.autocomplete = "off";
+    noteInput.placeholder = "Enter Note";
     noteInput.classList.add("note-input", "form");
     noteInput.id = "note-input-text";
     notesInputDiv.appendChild(noteInput);
@@ -112,6 +135,7 @@ function addToDB() {
     .add({
       name: itemName,
       status: "active",
+      notesArray: [],
     })
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
@@ -135,9 +159,17 @@ function removeCard(id) {
 }
 
 // DELETE NOTE
+function noteDelete(doc, id, note) {
+  console.log("click", note, doc);
 
-function noteDelete() {
-  console.log("click");
+  db.collection("list_items")
+    .doc(id)
+    .update({
+      notesArray: firebase.firestore.FieldValue.delete(),
+    })
+    .then(function () {
+      console.log("Note Deleted");
+    });
 }
 
 // CHECK FUNCTION

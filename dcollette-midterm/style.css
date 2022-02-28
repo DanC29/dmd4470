@@ -38,11 +38,13 @@ body {
   padding: 15px;
   border-radius: 50px;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 #item_input:focus {
+  background-color: #fff2ce;
   outline: none;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   transform: scale(1.05);
 }
 
@@ -60,19 +62,32 @@ body {
 #add_new_task:hover {
   background-color: #6abccf;
 }
+#add_new_task:focus {
+  background-color: #6abccf;
+}
 
 .card {
   margin: 1rem;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px,
+  /*   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px,
     rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px,
-    rgba(0, 0, 0, 0.07) 0px 16px 16px;
+    rgba(0, 0, 0, 0.07) 0px 16px 16px; */
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  transition: all 0.2s ease-in-out;
+  transition: all 0.5s ease;
+}
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.4s ease;
 }
 .card-header {
   font-family: futura-pt-bold, sans-serif;
   font-weight: 700;
   font-style: normal;
   margin: 0;
+  color: #002947;
   background-color: #fff2ce;
 }
 
@@ -93,7 +108,17 @@ body {
   list-style: disc;
 }
 
-#note-input-text {
+.edit-note {
+  background-color: #002947;
+  border: none;
+  color: #fff2ce;
+}
+.edit-note:focus {
+  outline: none;
+  color: #fff2ce;
+}
+
+.note-input {
   background-color: #fff2ce;
   font-family: futura-pt, sans-serif;
   font-weight: 400;
@@ -106,11 +131,11 @@ body {
   border-radius: 50px;
 }
 
-#note-input-text:focus {
+.note-input:focus {
   outline: none;
 }
 
-#note_input_btn {
+.note-btn {
   margin: 5px;
   background-color: #fd9414;
   font-family: futura-pt, sans-serif;
@@ -122,10 +147,10 @@ body {
   border-radius: 50px;
   transition: all 0.1s ease-in-out;
 }
-#note_input_btn:hover {
+.note-btn:hover {
   background-color: #feb938;
 }
-#note_input_btn:focus {
+.note-btn:focus {
   background-color: #feb938;
   outline: none;
 }
@@ -193,4 +218,19 @@ body {
 .card-delete:focus {
   outline: none;
   background-color: rgb(211, 22, 22);
+}
+
+footer {
+  background-color: #002947;
+  color: #fff2ce;
+  padding: 2rem;
+  box-shadow: 0 50vh 0 50vh #002947;
+}
+footer p {
+  margin: 0;
+  text-align: center;
+}
+.footer-btn {
+  background-color: #fd9414;
+  color: #002947;
 }

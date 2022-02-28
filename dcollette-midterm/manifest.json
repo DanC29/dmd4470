@@ -1,0 +1,15 @@
+{
+  "name": "Spotify - The Music App",
+  "short_name" : "Spotify",
+  "start_url": "https://danc29.github.io/dmd4470/dcollette-midterm/",
+  "theme_color" : "#feb938",
+  "background_color" : "#002947",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon/midterm-icon.svg",
+      "sizes": "48x48 72x72 192x192 512x512"        
+    }
+  ]
+}

@@ -3,8 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This web app was created by Dan Collette for DMD 4470"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      content="This web app was created by Dan Collette for DMD 4470"
+    />
     <title>Dan's Shopping List</title>
+
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="icon" type="image/x-icon" href="/imgs/icons/midterm-icon.svg" />
 
     <link
       rel="stylesheet"
@@ -17,6 +29,12 @@
 
     <link rel="stylesheet" href="style.css" />
 
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+      }
+    </script>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 
     <!-- Source Cloud Firestore from the Google CDN -->
@@ -24,7 +42,8 @@
     <script src="firebase.js"></script>
   </head>
   <body>
-    <header class="sticky-top">
+    <!--  class="sticky-top" -->
+    <header>
       <div class="contianer header-container">
         <div class="row justify-content-center title">
           <div class="col-sm-10 col-md-8 col-lg-5">
@@ -55,6 +74,19 @@
         </div>
       </div>
     </main>
+    <footer>
+      <div class="conteiner d-flex justify-content-around">
+        <div class="row align-items-center">
+          <div class="col-sm-8 col-md-8 col-lg-8 footer-text">
+            <p>Created By Dan Collette</p>
+            <p>DMD 4470 Spring 2022</p>
+          </div>
+          <div class="col-sm-4 col-md-4 col-lg-4 install-col">
+            <button class="btn footer-btn">Install Web App</button>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
