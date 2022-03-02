@@ -7,17 +7,7 @@ self.addEventListener("install", (e) => {
   // to make this work offline
   e.waitUntil(
     caches.open(cacheName).then(async (cache) => {
-      await cache.addAll([
-        "/",
-        "index.html",
-        "style.css",
-        "firebase.js",
-        "script.js",
-        "imgs/background.png",
-        "imgs/icons/dcollette-midterm-icon-sm.png",
-        "imgs/icons/dcollette-midterm-icon-lg.png",
-        "imgs/icons/maskable_icon.png",
-      ]);
+      await cache.addAll(["index.html", "style.css"]);
       return self.skipWaiting();
     })
   );
