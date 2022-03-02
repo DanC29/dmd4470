@@ -1,15 +1,25 @@
 {
   "name": "Spotify - The Music App",
   "short_name" : "Spotify",
-  "start_url": "https://danc29.github.io/dmd4470/dcollette-midterm/",
+  "start_url": "index.html",
   "theme_color" : "#feb938",
   "background_color" : "#002947",
   "display": "standalone",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon/midterm-icon.svg",
-      "sizes": "48x48 72x72 192x192 512x512"        
+      "src": "/imgs/icons/dcollette-midterm-icon-sm.png",
+      "sizes": "96x96"        
+    },
+    {
+      "src": "/imgs/icons/dcollette-midterm-icon-lg.png",
+      "sizes": "512x512"   
+    },
+    {
+      "src": "/imgs/icons/maskable_icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

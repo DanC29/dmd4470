@@ -10,6 +10,10 @@ self.addEventListener("install", (e) => {
       return cache
         .addAll([
           "/",
+          "index.html",
+          "style.css",
+          "script.js",
+
           /*
           DEAR READER,
           ADD A LIST OF YOUR ASSETS THAT

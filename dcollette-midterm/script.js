@@ -29,10 +29,14 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
 
     //
 
+    var cardBod = document.createElement("div");
+    cardBod.classList.add("card-body");
+    cardDiv.appendChild(cardBod);
+
     // ITEM NOTES DIV
     var notesDiv = document.createElement("div");
     notesDiv.classList.add("notes");
-    cardDiv.appendChild(notesDiv);
+    cardBod.appendChild(notesDiv);
 
     // ITEM NOTES LIST
     var listCont = document.createElement("ul");
@@ -79,7 +83,7 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
     var notesInputDiv = document.createElement("div");
     notesInputDiv.classList.add("notes", "card-body");
     notesInputDiv.id = "note_list";
-    cardDiv.appendChild(notesInputDiv);
+    cardBod.appendChild(notesInputDiv);
 
     // ITEM NOTE INPUT
     var noteInput = document.createElement("input");
@@ -165,7 +169,7 @@ function noteDelete(doc, id, note) {
   db.collection("list_items")
     .doc(id)
     .update({
-      notesArray: firebase.firestore.FieldValue.delete(),
+      notesArray: firebase.firestore.FieldValue.arrayRemove(note),
     })
     .then(function () {
       console.log("Note Deleted");
