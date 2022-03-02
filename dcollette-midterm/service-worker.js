@@ -12,8 +12,12 @@ self.addEventListener("install", (e) => {
           "/",
           "index.html",
           "style.css",
+          "firebase.js",
           "script.js",
-
+          "imgs/background.png",
+          "imgs/icons/dcollette-midterm-icon-sm.png",
+          "imgs/icons/dcollette-midterm-icon-lg.png",
+          "imgs/icons/maskable_icon.png",
           /*
           DEAR READER,
           ADD A LIST OF YOUR ASSETS THAT
