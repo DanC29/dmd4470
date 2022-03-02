@@ -6,26 +6,19 @@ self.addEventListener("install", (e) => {
   // once the SW is installed, go ahead and fetch the resources
   // to make this work offline
   e.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      return cache
-        .addAll([
-          "/",
-          "index.html",
-          "style.css",
-          "firebase.js",
-          "script.js",
-          "imgs/background.png",
-          "imgs/icons/dcollette-midterm-icon-sm.png",
-          "imgs/icons/dcollette-midterm-icon-lg.png",
-          "imgs/icons/maskable_icon.png",
-          /*
-          DEAR READER,
-          ADD A LIST OF YOUR ASSETS THAT
-          YOU WANT TO WORK WHEN OFFLINE
-          TO THIS ARRAY OF URLS
-        */
-        ])
-        .then(() => self.skipWaiting());
+    caches.open(cacheName).then(async (cache) => {
+      await cache.addAll([
+        "/",
+        "index.html",
+        "style.css",
+        "firebase.js",
+        "script.js",
+        "imgs/background.png",
+        "imgs/icons/dcollette-midterm-icon-sm.png",
+        "imgs/icons/dcollette-midterm-icon-lg.png",
+        "imgs/icons/maskable_icon.png",
+      ]);
+      return self.skipWaiting();
     })
   );
 });
