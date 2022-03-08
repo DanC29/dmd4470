@@ -3,8 +3,11 @@ item_input.autocomplete = "off";
 const add_item_btn = document.querySelector("#add_new_task");
 const my_list = document.querySelector("#my_list");
 
+var listRef = db.collection("list_items");
+
 add_item_btn.addEventListener("click", addToDB);
 
+// CREATES CARDS
 db.collection("list_items").onSnapshot((querySnapshot) => {
   my_list.innerHTML = "";
 
@@ -55,27 +58,6 @@ db.collection("list_items").onSnapshot((querySnapshot) => {
       });
       notesDiv.appendChild(listCont);
     }
-    // Potential way of adding and storing note data?? / can't figure out how user would save after focus
-    /*     // ITEM NOTES LIST
-    var listCont = document.createElement("ul");
-    listCont.classList.add("notes-ul", `${doc.id}`);
-    listCont.id = "note_list";
-    if (doc.data().notesArray) {
-      doc.data().notesArray.forEach((note) => {
-        // NOTE LI
-        var noteLI = document.createElement("li");
-        noteLI.classList.add("notes-li");
-        // EDIT INPUT
-        var editNote = document.createElement("input");
-        editNote.setAttribute("type", "text");
-        editNote.setAttribute("value", note);
-        editNote.classList.add("edit-note");
-        noteLI.appendChild(editNote);
-
-        listCont.appendChild(noteLI);
-      });
-    }
-    notesDiv.appendChild(listCont); */
 
     //
 
@@ -140,6 +122,7 @@ function addToDB() {
       name: itemName,
       status: "active",
       notesArray: [],
+      created: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
@@ -205,7 +188,6 @@ function addNote(id, noteContent, doc) {
 
   var notes = doc.data().notesArray || [];
 
-  // Set the "capital" field of the city 'DC'
   return noteArrayRef
     .update({
       notesArray: [...notes, noteContent],
@@ -218,3 +200,17 @@ function addNote(id, noteContent, doc) {
       console.error("Error updating document: ", error);
     });
 }
+
+// ORDER ITEMS
+/* const orderCreated = document.getElementById("order-created");
+const orderStatus = document.getElementById("order-status");
+
+orderCreated.addEventListener("click", function () {
+  orderWhenCreated();
+});
+
+function orderWhenCreated() {
+  console.log("click");
+  db.collection("list_items").orderBy("created", Query.Direction.ASCENDING);
+  // listRef.orderBy("created");
+} */

@@ -66,6 +66,26 @@ body {
   background-color: #6abccf;
 }
 
+.order-btns {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 2rem;
+}
+.order-btns button {
+  background-color: #002947;
+  color: #fff2ce;
+  border-radius: 50px;
+  padding: 15px;
+  margin: 10px;
+}
+.order-btns button:hover {
+  background-color: #6abccf;
+}
+.order-btns button:focus {
+  background-color: #6abccf;
+}
+
 .card {
   margin: 1rem;
   border: none;
