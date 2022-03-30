@@ -1,0 +1,30 @@
+.note-input {
+  margin: 1.5rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+.save-task {
+  background-color: rgb(40, 40, 102);
+  color: white;
+  margin-top: 1rem;
+}
+.card {
+  margin-top: 1rem;
+  border-bottom: 1rem;
+}
+.input-style {
+  border: none;
+  border-bottom: 1px solid rgb(80, 79, 79);
+  border-radius: 0;
+  background: none;
+  transition: all 0.5s ease-out;
+}
+.input-style:focus {
+  border-radius: 50px;
+  background: red;
+  outline: none;
+  box-shadow: none;
+}
+.task-notes {
+  margin-top: 1rem;
+}

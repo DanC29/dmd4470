@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Practice</title>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!-- Firestore  -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="https://use.typekit.net/vsg7ukt.css" />
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div id="app">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 note-input">
+              <label for="toDo">Item Name:</label>
+              <input
+                type="text"
+                v-model="new_task.taskName"
+                id="toDo"
+                class="form-control"
+                placeholder="Enter Task"
+              />
+
+              <label for="toDo-note">Notes:</label>
+              <input
+                type="text"
+                v-model="new_task.notes"
+                id="toDo-note"
+                class="form-control"
+                placeholder="Enter Note"
+              />
+
+              <label for="toDo-due">Due Date:</label>
+              <input
+                type="date"
+                v-model="new_task.dueDate"
+                id="toDo-due"
+                class="form-control"
+              />
+
+              <button @click="newNote()" class="btn save-task">
+                Save New Task
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div v-for="item in tasks" :key="item.id" class="card">
+                <div class="card-header">
+                  <input
+                    type="text"
+                    v-model="item.taskName"
+                    @change="updateTask(item)"
+                    class="form-control input-style"
+                  />
+                </div>
+                <div class="card-body">
+                  <input
+                    type="date"
+                    @change="updateTask(item)"
+                    v-model="item.dueDate"
+                    class="form-control"
+                  />
+                  <input
+                    type="text"
+                    v-model="item.notes"
+                    @change="updateTask(item)"
+                    class="form-control input-style task-notes"
+                    placeholder="Enter Note"
+                  />
+                </div>
+                <div class="card-footer">
+                  <button class="btn">Complete</button>
+                  <button @click="deleteTask()" class="btn">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <!-- My JS  -->
+  <script src="script.js"></script>
+</html>
