@@ -92,8 +92,12 @@
                   />
                 </div>
                 <div class="card-footer">
-                  <button class="btn">Complete</button>
-                  <button @click="deleteTask()" class="btn">Delete</button>
+                  <button @click="taskComplete(item.id)" class="btn">
+                    Complete
+                  </button>
+                  <button @click="deleteTask(item.id)" class="btn">
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>

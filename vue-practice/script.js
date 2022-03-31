@@ -6,6 +6,7 @@ var app = new Vue({
         taskName: "",
         notes: "",
         dueDate: "",
+        status: "active",
       },
 
       tasks: [],
@@ -18,6 +19,7 @@ var app = new Vue({
           newTaskName: this.new_task.taskName,
           newNote: this.new_task.notes,
           newDueDate: this.new_task.dueDate,
+          taskStatus: this.new_task.status,
         })
         .then(() => {
           console.log("Document successfully written!");
@@ -33,10 +35,11 @@ var app = new Vue({
           this.tasks = [];
           querySnapshot.forEach((doc) => {
             this.tasks.push({
+              id: doc.id,
               taskName: doc.data().newTaskName,
               notes: doc.data().newNote,
               dueDate: doc.data().newDueDate,
-              id: doc.id,
+              status: doc.data().taskStatus,
             });
           });
           console.log(db);
@@ -48,7 +51,7 @@ var app = new Vue({
       return docRef
         .update({
           newTaskName: data.taskName,
-          newNotes: data.notes,
+          newNote: data.notes,
           newDueDate: data.dueDate,
         })
         .then(() => {
@@ -70,8 +73,49 @@ var app = new Vue({
           console.error("Error removing document: ", error);
         });
     },
+    taskComplete(id) {
+      console.log("click", id);
+      let currentStatus = db.collection("task_list").doc(id);
+      currentStatus.get().then(function (doc) {
+        if (doc.exists) {
+          let taskStatus = doc.data().taskStatus;
+          if (taskStatus == "active") {
+            currentStatus.update({
+              taskStatus: "completed",
+            });
+            console.log(doc.data().taskStatus);
+          } else if (taskStatus == "completed") {
+            currentStatus.update({
+              taskStatus: "active",
+            });
+            console.log(doc.data().taskStatus);
+          }
+        }
+      });
+    },
   },
   mounted() {
     this.getTasksFromFirestore("last");
   },
 });
+
+/* taskComplete(id) {
+  console.log("click", id);
+  let taskCheck = db.collection("task_list").doc(id);
+  taskCheck.get().then(function (doc) {
+    if (doc.exists) {
+      let status = doc.data().status;
+      if (status == "active") {
+        itemCheck.update({
+          status: "completed",
+        });
+        console.log(doc.data().status);
+      } else if (status == "completed") {
+        itemCheck.update({
+          status: "active",
+        });
+        console.log(doc.data().status);
+      }
+    }
+  });
+}, */

@@ -12,18 +12,29 @@
   margin-top: 1rem;
   border-bottom: 1rem;
 }
+label {
+  color: rgb(40, 40, 102);
+}
+.form-control {
+  border: 1px solid rgba(40, 40, 102, 0.296);
+  color: rgb(40, 40, 102);
+}
+.form-control:focus {
+  border: 1px solid rgb(40, 40, 102);
+  outline: none;
+  box-shadow: none;
+}
 .input-style {
   border: none;
-  border-bottom: 1px solid rgb(80, 79, 79);
+  border-bottom: 1px solid rgba(40, 40, 102, 0.296);
   border-radius: 0;
   background: none;
-  transition: all 0.5s ease-out;
+  transition: all 0.5s ease-in-out;
+  color: rgb(40, 40, 102);
 }
 .input-style:focus {
   border-radius: 50px;
-  background: red;
-  outline: none;
-  box-shadow: none;
+  border: 1px solid rgba(40, 40, 102, 0.296);
 }
 .task-notes {
   margin-top: 1rem;
