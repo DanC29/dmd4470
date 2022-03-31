@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Demo 3/7</title>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!-- Source Cloud Firestore from the Google CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="https://use.typekit.net/vsg7ukt.css" />
+
+    <!-- My CSS-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{app_title}}</h1>
+      <h2>{{app_subhead}}</h2>
+
+      <ul>
+        <li v-for="item in contacts" :key="item.id">
+          <a :href="'mailto' + item.email"
+            >{{item.id}}{{item.first}} {{item.last}}</a
+          >:
+          <input type="text" @input="updateContact(item)" v-model="item.phone" 
+            >{{item.phone}}</input
+          >: ({{item.notes}})
+        </li>
+      </ul>
+      <div>
+        <input
+          v-model="new_contact.first"
+          type="text"
+          placeholder="First Name"
+        />
+        <input v-model="new_contact.last" type="text" placeholder="Last Name" />
+        <input v-model="new_contact.email" type="email" placeholder="Email" />
+        <input v-model="new_contact.phone" type="tel" placeholder="Phone" />
+        <input v-model="new_contact.notes" type="text" placeholder="Notes" />
+        <button @click="newContact()">Save New Contact</button>
+      </div>
+    </div>
+    <!-- My JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
