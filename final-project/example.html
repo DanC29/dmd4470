@@ -1,0 +1,105 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DCollette Final</title>
+    // Vue
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    // Firestore
+    <script src="firebase.js"></script>
+    // Bootstrap
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="https://use.typekit.net/vsg7ukt.css" />
+
+    //  My CSS
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main></main>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-main>
+          <v-container>
+            <v-app-bar elevation="4">
+              <v-toolbar-title>{{app_title}}</v-toolbar-title>
+            </v-app-bar>
+            <v-row>
+              <v-card elevation="2">
+                <v-card-title>Card Title</v-card-title>
+                <v-card-actions>
+                  <v-btn color="deep-purple lighten-2" text @click="reserve">
+                    Reserve
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+
+              <v-card elevation="2" :class="task.status">
+                <v-card-title>Card Title</v-card-title>
+                <v-card-actions>
+                  <v-btn
+                    color="deep-purple lighten-2"
+                    text
+                    @click="task.status = 'complete'"
+                  >
+                    Reserve
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: function () {
+          return {
+            app_title: "New App Title!",
+            task: [
+              {
+                status: "active",
+              },
+            ],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

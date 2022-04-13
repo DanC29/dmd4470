@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Post</title>
+
+    <!-- Vue CDN -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div id="new-post-header">
+        <v-app>
+          <v-app-bar fixed>
+            <v-spacer></v-spacer>
+
+            <v-toolbar-title>{{header_title}}</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+          </v-app-bar>
+        </v-app>
+      </div>
+    </header>
+    <main>
+      <div id="new-post-content">
+        <v-app>
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-img
+                    :aspect-ratio="16/9"
+                    :width="width"
+                    src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+                  >
+                  </v-img>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-form>
+              <v-row class="d-flex flex-column">
+                <v-col>
+                  <v-file-input
+                    accept="image/*"
+                    label="Upload An Image"
+                    prepend-icon="mdi-camera"
+                  ></v-file-input>
+                  <v-text-field placeholder="Caption"></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-btn class="mr-1">
+                    <v-icon>mdi-close-circle</v-icon>
+                    <p class="ma-0">Cancel</p> </v-btn
+                  ><v-btn class="ml-1">
+                    <v-icon> mdi-send </v-icon>
+                    <p class="ma-0">Post</p>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-container>
+        </v-app>
+      </div>
+
+      <div id="bottom-nav">
+        <v-app>
+          <v-container fluid>
+            <v-row>
+              <v-bottom-navigation shift fixed>
+                <v-btn>
+                  <p>Search</p>
+                  <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>New Post</p>
+                  <v-icon>mdi-plus-box</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>Home</p>
+                  <v-icon>mdi-home</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>Profile</p>
+                  <v-icon>mdi-account</v-icon>
+                </v-btn>
+              </v-bottom-navigation>
+            </v-row>
+          </v-container>
+        </v-app>
+      </div>
+    </main>
+    <!-- Vue JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- My JS -->
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friend Profile</title>
+
+    <!-- Vue CDN -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div id="profile-header">
+        <v-app>
+          <v-app-bar fixed>
+            <v-spacer></v-spacer>
+
+            <v-toolbar-title>{{user_name}}</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+          </v-app-bar>
+        </v-app>
+      </div>
+    </header>
+    <main>
+      <div id="personal-profile-top">
+        <v-app>
+          <v-container fluid class="pa-0">
+            <v-row justify="center" no-gutters>
+              <v-col lg="8">
+                <v-card outlined elevation="0" class="pt-3 pb-3">
+                  <v-row no-gutters justify="space-around" class="align-center">
+                    <v-col-6>
+                      <v-card-title class="black--text pa-0">
+                        <v-avatar size="32">
+                          <img
+                            alt="user"
+                            src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                          />
+                        </v-avatar>
+                        <v-col class="pa-0 pl-3 d-inline">
+                          <p class="ma-0 pa-0">John Doe</p>
+                          <v-card-subtitle class="pa-0">
+                            <p class="ma-0">
+                              Hey! Did you...
+                            </p>
+                          </v-card-subtitle>
+                        </v-col>
+                      </v-card-title>
+                    </v-col-6>
+                    <v-col-4 class="text-center align-center">
+                      <p class="pa-0 ma-0">tap to chat</p>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-app>
+      </div>
+
+      <div id="bottom-nav">
+        <v-app>
+          <v-container fluid>
+            <v-row>
+              <v-bottom-navigation shift fixed>
+                <v-btn>
+                  <p>Search</p>
+                  <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>New Post</p>
+                  <v-icon>mdi-plus-box</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>Home</p>
+                  <v-icon>mdi-home</v-icon>
+                </v-btn>
+
+                <v-btn>
+                  <p>Profile</p>
+                  <v-icon>mdi-account</v-icon>
+                </v-btn>
+              </v-bottom-navigation>
+            </v-row>
+          </v-container>
+        </v-app>
+      </div>
+    </main>
+    <!-- Vue JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- My JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
