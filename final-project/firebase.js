@@ -1,12 +1,12 @@
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDObh10evw3aogSAmslurQKGXTt5uxNTpc",
-  authDomain: "dcollette-midterm.firebaseapp.com",
-  projectId: "dcollette-midterm",
-  storageBucket: "dcollette-midterm.appspot.com",
-  messagingSenderId: "829193344690",
-  appId: "1:829193344690:web:35dc7179d6bad982949bab",
-  measurementId: "G-E7XWR1M6CG",
+  apiKey: "AIzaSyC5AMy_0_BpD9NtbfpnIXMq1ks7cWBg4Cc",
+  authDomain: "vue-demo-872fd.firebaseapp.com",
+  projectId: "vue-demo-872fd",
+  storageBucket: "vue-demo-872fd.appspot.com",
+  messagingSenderId: "38525788404",
+  appId: "1:38525788404:web:e005fc1e3e14cabc9a3ea1",
+  measurementId: "G-GPKJG4QDZ9",
 };
 
 firebase.initializeApp(firebaseConfig);
