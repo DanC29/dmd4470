@@ -1,4 +1,33 @@
-// HEADERS
+// Feed Page
+var feedPage = new Vue({
+  el: "#feed-page",
+  vuetify: new Vuetify(),
+  data: function () {
+    return {
+      app_title: "Still Thinking",
+      settings: {
+        privacy: "Privacy",
+        account: "Account Settings",
+        passwords: "Passwords",
+        notifications: "Notifications",
+      },
+    };
+  },
+  theme: {
+    themes: {
+      light: {
+        primary: "#548A8D",
+        secondary: "#548A8D",
+        accent: "#8c9eff",
+        error: "#b71c1c",
+      },
+    },
+  },
+});
+
+// Self Profile
+
+/* // HEADERS
 var mainHeader = new Vue({
   el: "#main-header",
   vuetify: new Vuetify(),
@@ -102,4 +131,4 @@ var personalProfileTop = new Vue({
       },
     };
   },
-});
+}); */

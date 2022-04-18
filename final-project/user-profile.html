@@ -24,45 +24,67 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <div id="profile-header">
-        <v-app>
-          <v-app-bar fixed>
-            <v-spacer></v-spacer>
+    <div id="profile-page">
+      <v-app>
+        <!-- Must have the app property -->
+        <v-app-bar app>
+          <v-btn icon>
+            <v-icon> mdi-bell </v-icon>
+          </v-btn>
+          <v-spacer> </v-spacer>
+          <v-toolbar-title>Steve G</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon> mdi-inbox </v-icon>
+          </v-btn>
+        </v-app-bar>
+    
+          <v-bottom-navigation app
+          shift>
+            <v-btn>
+              <p>Search</p>
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
 
-            <v-toolbar-title>{{user_name}}</v-toolbar-title>
+            <v-btn>
+              <p>New Post</p>
+              <v-icon>mdi-plus-box</v-icon>
+            </v-btn>
 
-            <v-spacer></v-spacer>
-          </v-app-bar>
-        </v-app>
-      </div>
-    </header>
-    <main>
-      <div id="personal-profile-top">
-        <v-app>
-          <v-container fluid class="pa-0">
-            <v-row justify="center" no-gutters>
-              <v-col lg="8">
-                <v-card outlined elevation="0" class="pt-5 pb-5">
+            <v-btn>
+              <p>Home</p>
+              <v-icon>mdi-home</v-icon>
+            </v-btn>
+
+            <v-btn>
+              <p>Profile</p>
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+          </v-bottom-navigation>
+
+        <v-main>
+        <v-container class="pa-0">
+          <v-row no-gutters justify="center">
+            <v-col sm="6" md="6" class="pa-0">
                   <v-row
                     no-gutters
                     justify="center"
                     class="align-center text-center flex-row"
                   >
-                    <v-col-3 class="pa-5">
-                      <p class="ma-0">203</p>
-                      <p class="ma-0">Followers</p> </v-col-3
-                    ><v-col-3 class="pa-5">
-                      <p class="ma-0">7</p>
-                      <p class="ma-0">Ideas</p> </v-col-3
-                    ><v-col-3 class="pa-5">
-                      <p class="ma-0">3</p>
+                    <div class="pa-5 pb-3">
+                      <p class="ma-0">57</p>
+                      <p class="ma-0">Followers</p> </div
+                    ><div class="pa-5 pb-3">
+                      <p class="ma-0">18</p>
+                      <p class="ma-0">Ideas</p> </div
+                    ><div class="pa-5 pb-3">
+                      <p class="ma-0">25</p>
                       <p class="ma-0">Reposts</p>
-                    </v-col-3>
+                    </div>
                   </v-row>
                   <v-row no-gutters justify="center" class="align-center">
-                    <v-col-6>
-                      <v-card-title class="black--text pl-5 pr-5">
+                    <v-col cols="12" class="pa-5 pt-0 pb-0">
+                      <v-card-title class="black--text pa-0">
                         <v-avatar size="56">
                           <img
                             alt="user"
@@ -70,151 +92,154 @@
                           />
                         </v-avatar>
                         <v-col class="pa-0 pl-3 d-inline">
-                          <p class="ma-0 pa-0">John Doe</p>
+                          <p class="ma-0 pa-0">Steve G</p>
                           <v-card-subtitle class="pa-0">
                             <p class="ma-0">
-                              Hello I'm John and I have 11 dogs and 7 cats!
+                              Hey there! I'm Steve
                             </p>
                           </v-card-subtitle>
                         </v-col>
                       </v-card-title>
-                    </v-col-6>
+                    </v-col>
                   </v-row>
-                  <v-row no-gutters justify="center" class="align-center">
-                    <v-col>
-                      <v-card-actions class="pl-5 pr-5">
-                        <v-btn>
-                          <v-icon>mdi-plus</v-icon>
-                          <p class="ma-0 pl-2">Follow</p>
+                  <v-row no-gutters justify="center" class="flex-row align-center text-center">
+                    <v-col class="pt-3 pb-3 pl-5 pr-2">
+                      <v-btn block>
+                        <v-icon> mdi-plus </v-icon>
+                        <p class="ma-0 pl-2">Follow</p>
+                      </v-btn>
+                    </v-col>
+                    <v-col class="pt-3 pb-3 pl-2 pr-5">
+                      <v-btn block>
+                        <v-icon> mdi-send </v-icon>
+                        <p class="ma-0 pl-2">Message</p>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+          <v-container class="pa-0">
+            <v-row
+              no-gutters
+              justify="space-around"
+              class="flex-column align-center"
+            >
+              <v-col sm="6" md="6">
+                <v-card elevation="0" class="card-styles">
+                  <div class="pa-5" >
+                    <div class="d-flex flex-no-wrap pb-2">
+                      <v-avatar color="black" size="26" class="mr-1"></v-avatar>
+                      <h3 class="ml-1">Steve G</h3>
+                    </div>
+                    <div>
+                      <v-card-title class="pa-0 pb-2">
+                        <p class="ma-0">Random Caption</p>
+                      </v-card-title>
+                    </div>
+                    <div>
+                      <v-img
+                        :aspect-ratio="16/9"
+                        
+                        src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+                      >
+                      </v-img>
+                    </div>
+                    <div>
+                      <v-card-actions class="pa-0 pt-2">
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-heart </v-icon>
                         </v-btn>
-                        <v-btn>
-                          <v-icon>mdi-send</v-icon>
-                          <p class="ma-0 pl-2">Message</p>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-repeat-variant </v-icon>
+                        </v-btn>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-chat </v-icon>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon>mdi-share-variant-outline</v-icon>
                         </v-btn>
                       </v-card-actions>
-                    </v-col>
-                  </v-row>
+                    </div>
+                    <div>
+                      <v-btn text class="pa-0 pt-1">
+                        <p class="mb-0">View All Comments</p>
+                      </v-btn>
+                    </div>
+                    <div>
+                      <p class="mb-0 pt-1">Date / Time</p>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
-            </v-row>
-          </v-container>
-        </v-app>
-      </div>
 
-      <div id="post-style">
-        <v-app>
-          <v-container>
-            <!-- Card 1 With Img -->
-            <v-row justify="center">
-              <v-col sm="5" md="5" lg="5">
-                <v-card>
-                  <v-row no-gutters>
-                    <v-col>
-                      <v-card-text
-                        class="pt-5 pl-5 pb-1 pr-5 d-flex flex-row align-center"
-                      >
-                        <v-avatar color="black" size="26"></v-avatar>
-                        <p class="mb-0 pl-2">{{text.card_user}}</p>
-                      </v-card-text>
-                      <v-card-title class="pt-1 pl-5 pb-2 pr-5">
-                        <p class="mb-0">{{text.card_caption}}</p>
+              <v-col sm="6" md="6">
+                <v-card elevation="0" class="card-styles">
+                  <div class="pa-5">
+                    <div class="d-flex flex-no-wrap pb-2">
+                      <v-avatar color="black" size="26" class="mr-1"></v-avatar>
+                      <h3 class="ml-1">Steve G</h3>
+                    </div>
+                    <div>
+                      <v-card-title class="pa-0 pb-2">
+                        <p class="ma-0">Random Caption</p>
                       </v-card-title>
-                    </v-col>
-                  </v-row>
-                  <v-img
-                    :aspect-ratio="16/9"
-                    :width="width"
-                    src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-                  >
-                  </v-img>
-                  <v-row no-gutters>
-                    <v-card-actions class="pt-2 pl-5 pb-2 pr-5">
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-heart </v-icon>
+                    </div>
+                    <div>
+                      <v-card-actions class="pa-0 pt-2">
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-heart </v-icon>
+                        </v-btn>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-repeat-variant </v-icon>
+                        </v-btn>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon> mdi-chat </v-icon>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn icon class="ma-0 pa-0">
+                          <v-icon>mdi-share-variant-outline</v-icon>
+                        </v-btn>
+                      </v-card-actions>
+                    </div>
+                    <div>
+                      <v-btn text class="pa-0">
+                        <p class="mb-0 pt-1">View All Comments</p>
                       </v-btn>
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-repeat-variant </v-icon>
-                      </v-btn>
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon>mdi-share-variant-outline</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-row>
-                </v-card>
-              </v-col>
-            </v-row>
-            <!-- Card 2 No Img -->
-            <v-row justify="center">
-              <v-col sm="5" md="5" lg="5">
-                <v-card>
-                  <v-row no-gutters>
-                    <v-col>
-                      <v-card-text
-                        class="pt-5 pl-5 pb-1 pr-5 d-flex flex-row align-center"
-                      >
-                        <v-avatar color="black" size="26"></v-avatar>
-                        <p class="mb-0 pl-2">{{text.card_user}}</p>
-                      </v-card-text>
-                      <v-card-title class="pt-1 pl-5 pb-2 pr-5">
-                        <p class="mb-0">{{text.card_caption_two}}</p>
-                      </v-card-title>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-card-actions class="pt-2 pl-5 pb-2 pr-5">
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-heart </v-icon>
-                      </v-btn>
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-repeat-variant </v-icon>
-                      </v-btn>
-                      <v-btn icon class="ma-0 pa-0">
-                        <v-icon>mdi-share-variant-outline</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-row>
+                    </div>
+                    <div>
+                      <p class="mb-0 pt-1">Date / Time</p>
+                    </div>
+                  </div>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
           </v-container>
-        </v-app>
-      </div>
-
-      <div id="bottom-nav">
-        <v-app>
-          <v-container fluid>
-            <v-row>
-              <v-bottom-navigation shift fixed>
-                <v-btn>
-                  <p>Search</p>
-                  <v-icon>mdi-magnify</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>New Post</p>
-                  <v-icon>mdi-plus-box</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Home</p>
-                  <v-icon>mdi-home</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Profile</p>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-bottom-navigation>
-            </v-row>
-          </v-container>
-        </v-app>
-      </div>
-    </main>
+          
+        </v-main>
+        
+      </v-app>
+    </div>
     <!-- Vue JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
     <!-- My JS -->
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script>
+      var profileHeader = new Vue({
+  el: "#profile-page",
+  vuetify: new Vuetify(),
+  data: function () {
+    return {
+      drawer: false,
+      group: null,
+      user_name: "John Doe",
+    };
+  },
+});
+    </script>
   </body>
 </html>

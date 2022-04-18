@@ -4,3 +4,8 @@
   position: absolute;
   width: 100%;
 }
+
+.card-styles {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
