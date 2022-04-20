@@ -20,99 +20,116 @@
       rel="stylesheet"
     />
 
+    <!-- Source Cloud Firestore from the Google CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <div id="new-post-header">
-        <v-app>
-          <v-app-bar fixed>
-            <v-spacer></v-spacer>
+    <div id="create-new-post">
+      <v-app>
+        <!-- Must have the app property -->
+        <v-app-bar app>
+          <v-btn icon>
+            <v-icon> mdi-bell </v-icon>
+          </v-btn>
+          <v-spacer> </v-spacer>
+          <v-toolbar-title>Still Thinking</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon> mdi-inbox </v-icon>
+          </v-btn>
+        </v-app-bar>
 
-            <v-toolbar-title>{{header_title}}</v-toolbar-title>
+        <v-bottom-navigation app shift>
+          <!--             <v-btn>
+              <p>Search</p>
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn> -->
 
-            <v-spacer></v-spacer>
-          </v-app-bar>
-        </v-app>
-      </div>
-    </header>
-    <main>
-      <div id="new-post-content">
-        <v-app>
-          <v-container>
-            <v-row>
-              <v-col>
+          <v-btn href="new-post.html">
+            <p>New Post</p>
+            <v-icon>mdi-plus-box</v-icon>
+          </v-btn>
+
+          <v-btn href="feed.html">
+            <p>Home</p>
+            <v-icon>mdi-home</v-icon>
+          </v-btn>
+
+          <v-btn href="user-profile.html">
+            <p>Profile</p>
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
+
+        <v-main>
+          <v-container fill-height fluid>
+            <v-row no-gutters justify="center" class="align-center">
+              <v-col sm="8" md="6">
                 <v-card>
-                  <v-img
-                    :aspect-ratio="16/9"
-                    :width="width"
-                    src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-                  >
-                  </v-img>
+                  <v-form>
+                    <v-row class="d-flex flex-column pa-5">
+                      <v-col>
+                        <h3 class="text-center">What's Your Idea?</h3>
+                      </v-col>
+                      <v-col>
+                        <v-text-field
+                          type="text"
+                          placeholder="Caption"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col>
+                        <v-btn class="mr-2">
+                          <v-icon>mdi-close-circle</v-icon>
+                          <p class="ma-0 pl-2">Cancel</p> </v-btn
+                        ><v-btn class="ml-2" @click="newPost()">
+                          <v-icon> mdi-send </v-icon>
+                          <p class="ma-0 pl-2">Post</p>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-card>
               </v-col>
             </v-row>
-            <v-form>
-              <v-row class="d-flex flex-column">
-                <v-col>
-                  <v-file-input
-                    accept="image/*"
-                    label="Upload An Image"
-                    prepend-icon="mdi-camera"
-                  ></v-file-input>
-                  <v-text-field placeholder="Caption"></v-text-field>
-                </v-col>
-                <v-col>
-                  <v-btn class="mr-1">
-                    <v-icon>mdi-close-circle</v-icon>
-                    <p class="ma-0">Cancel</p> </v-btn
-                  ><v-btn class="ml-1">
-                    <v-icon> mdi-send </v-icon>
-                    <p class="ma-0">Post</p>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-form>
           </v-container>
-        </v-app>
-      </div>
-
-      <div id="bottom-nav">
-        <v-app>
-          <v-container fluid>
-            <v-row>
-              <v-bottom-navigation shift fixed>
-                <v-btn>
-                  <p>Search</p>
-                  <v-icon>mdi-magnify</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>New Post</p>
-                  <v-icon>mdi-plus-box</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Home</p>
-                  <v-icon>mdi-home</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Profile</p>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-bottom-navigation>
-            </v-row>
-          </v-container>
-        </v-app>
-      </div>
-    </main>
+        </v-main>
+      </v-app>
+    </div>
     <!-- Vue JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
     <!-- My JS -->
-    <script src="script.js"></script>
+    <script>
+      var createNewPost = new Vue({
+        el: "#create-new-post",
+        vuetify: new Vuetify(),
+        data: function () {
+          return {};
+        },
+        methods: {
+          newPost: function () {
+            // Add a new document in collection "cities"
+            db.collection("posts")
+              .add({
+                caption: this.new_post.caption,
+                timestamp: this.new_post.timestamp,
+                postId: this.new_post.id,
+              })
+              .then(() => {
+                console.log("Document successfully written!");
+              })
+              .catch((error) => {
+                console.error("Error writing document: ", error);
+              });
+          },
+        },
+      });
+    </script>
   </body>
 </html>

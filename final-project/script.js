@@ -5,130 +5,58 @@ var feedPage = new Vue({
   data: function () {
     return {
       app_title: "Still Thinking",
-      settings: {
-        privacy: "Privacy",
-        account: "Account Settings",
-        passwords: "Passwords",
-        notifications: "Notifications",
-      },
+      posts: [],
     };
   },
-  theme: {
-    themes: {
-      light: {
-        primary: "#548A8D",
-        secondary: "#548A8D",
-        accent: "#8c9eff",
-        error: "#b71c1c",
-      },
+  methods: {
+    getPosts: function () {
+      // get the tweets from the firestore database and prep them for display
+      db.collection("posts")
+        .orderBy("timestamp")
+        .onSnapshot((querySnapshot) => {
+          this.posts = [];
+          querySnapshot.forEach((doc) => {
+            this.posts.push({
+              id: doc.id,
+              caption: doc.data().caption,
+              likes: doc.data().likes,
+              timestamp: doc.data().timestamp,
+              username: doc.data().username,
+            });
+          });
+        });
+    },
+
+    likePost: function (docID) {
+      var docRef = db.collection("posts").doc(docID);
+
+      // Set the "capital" field of the city 'DC'
+
+      //firebase.firestore.FieldValue.arrayUnion("joelsalisbury")
+
+      return docRef
+        .update({
+          likes: firebase.firestore.FieldValue.arrayUnion("joelsalisbury"),
+        })
+        .then(() => {
+          console.log("Document successfully updated!");
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+        });
     },
   },
-});
-
-// Self Profile
-
-/* // HEADERS
-var mainHeader = new Vue({
-  el: "#main-header",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      drawer: false,
-      group: null,
-      header_title: "Still Thinking",
-      settings: {
-        privacy: "Privacy",
-        account: "Account Settings",
-        passwords: "Passwords",
-        notifications: "Notifications",
-      },
-    };
-  },
-  watch: {
-    group() {
-      this.drawer = false;
-    },
+  mounted() {
+    this.getPosts();
   },
 });
 
-var newPostHeader = new Vue({
-  el: "#new-post-header",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      drawer: false,
-      group: null,
-      header_title: "Still Thinking",
-    };
-  },
-});
-
-var profileHeader = new Vue({
-  el: "#profile-header",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      drawer: false,
-      group: null,
-      header_title: "Still Thinking",
-      user_name: "John Doe",
-    };
-  },
-});
-
-// BOTTOM NAV
+/* // BOTTOM NAV
 var bottomNav = new Vue({
   el: "#bottom-nav",
   vuetify: new Vuetify(),
   data: function () {
     return {};
-  },
-});
-
-// NEW POST
-var newPostContent = new Vue({
-  el: "#new-post-content",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      drawer: false,
-      group: null,
-      header_title: "Still Thinking",
-    };
-  },
-});
-
-// POST STYLE
-var postStyle = new Vue({
-  el: "#post-style",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      text: {
-        card_user: "random_user",
-        card_caption: "Heres my generic caption",
-        card_caption_two:
-          "This is a post about some random shower thought I had... Testing out how longer post look... hopefully this is a couple lines",
-        status: "unliked",
-      },
-      comments: {
-        user_comments: "",
-        random_comments: "This is a random comment",
-      },
-    };
-  },
-});
-
-// PERSONAL PROFILE
-var personalProfileTop = new Vue({
-  el: "#personal-profile-top",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {
-      profile: {
-        user: "random user",
-        user_bio: "Heres my generic caption",
-      },
-    };
   },
 }); */

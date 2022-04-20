@@ -20,6 +20,11 @@
       rel="stylesheet"
     />
 
+    <!-- Source Cloud Firestore from the Google CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -41,22 +46,22 @@
     
           <v-bottom-navigation app
           shift>
-            <v-btn>
+<!--             <v-btn>
               <p>Search</p>
               <v-icon>mdi-magnify</v-icon>
-            </v-btn>
+            </v-btn> -->
 
-            <v-btn>
+            <v-btn href="new-post.html">
               <p>New Post</p>
               <v-icon>mdi-plus-box</v-icon>
             </v-btn>
 
-            <v-btn>
+            <v-btn href="feed.html">
               <p>Home</p>
               <v-icon>mdi-home</v-icon>
             </v-btn>
 
-            <v-btn>
+            <v-btn href="user-profile.html">
               <p>Profile</p>
               <v-icon>mdi-account</v-icon>
             </v-btn>

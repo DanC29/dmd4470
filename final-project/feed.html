@@ -33,125 +33,66 @@
       <v-app>
         <!-- Must have the app property -->
         <v-app-bar app class="feed-app-bar">
-          <v-btn icon>
-            <v-icon color="white"> mdi-bell </v-icon>
-          </v-btn>
+
           <v-spacer> </v-spacer>
           <v-toolbar-title>Still Thinking</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon>
-            <v-icon color="white"> mdi-inbox </v-icon>
+            <v-icon> mdi-inbox </v-icon>
           </v-btn>
         </v-app-bar>
-    
-          <v-bottom-navigation app v-model="value"
-          :background-coloe="color"
-          shift>
-            <v-btn>
-              <p>Search</p>
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-
-            <v-btn>
-              <p>New Post</p>
-              <v-icon>mdi-plus-box</v-icon>
-            </v-btn>
-
-            <v-btn>
-              <p>Home</p>
+        
+          <v-bottom-navigation app
+          >            
+            <v-btn href="feed.html">
+        
               <v-icon>mdi-home</v-icon>
             </v-btn>
 
-            <v-btn>
-              <p>Profile</p>
+            <v-btn href="new-post.html" class="rounded-50">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+
+            <v-btn href="user-profile.html">
+              
               <v-icon>mdi-account</v-icon>
             </v-btn>
+            
           </v-bottom-navigation>
    
 
         <v-main>
           <v-container class="pa-0 mt-5">
+            
             <v-row
               no-gutters
               justify="space-around"
               class="flex-column align-center"
             >
-              <v-col sm="6" md="4">
-                <v-card elevation="0" class="card-styles rounded-0 mb-1">
-                  <div class="pa-5" >
-                    <div class="d-flex flex-no-wrap pb-2">
-                      <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
-                      <h3 class="ml-1">John Doe</h3>
-                    </div>
-                    <div>
-                      <v-card-title class="pa-0 pb-2">
-                        <p class="ma-0">Random Caption</p>
-                      </v-card-title>
-                    </div>
-                    <div>
-                      <v-img
-                        :aspect-ratio="16/9"
-                        
-                        src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-                      >
-                      </v-img>
-                    </div>
-                    <div>
-                      <v-card-actions class="pa-0 pt-2">
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-heart </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-repeat-variant </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-chat </v-icon>
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon>mdi-share-variant-outline</v-icon>
-                        </v-btn>
-                      </v-card-actions>
-                    </div>
-                    <div>
-                      <v-btn text class="pa-0 pt-1 ">
-                        <p class="mb-0">View All Comments</p>
-                      </v-btn>
-                    </div>
-                    <div>
-                      <p class="mb-0 pt-1">Date / Time</p>
-                    </div>
-                  </div>
-                </v-card>
-              </v-col>
-
-              <v-col sm="6" md="4">
+              <v-col v-for="posts in posts" sm="6" md="4">
                 <v-card elevation="0" class="card-styles rounded-0" >
                   <div class="pa-5">
                     <div class="d-flex flex-no-wrap pb-2">
                       <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
-                      <h3 class="ml-1">John Doe</h3>
+                      <h3 class="ml-1">{{posts.username}}</h3>
                     </div>
                     <div>
                       <v-card-title class="pa-0 pb-1">
-                        <p class="ma-0">Random Caption</p>
+                        <p class="ma-0">{{posts.caption}}</p>
                       </v-card-title>
                     </div>
                     <div>
                       <v-card-actions class="pa-0 pt-1">
-                        <v-btn icon class="ma-0 pa-0">
+                        <v-btn icon class="ma-0 pa-0" @click="likePost(posts.id)">
                           <v-icon> mdi-heart </v-icon>
                         </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
+                        
+                        <!-- <v-btn icon class="ma-0 pa-0">
                           <v-icon> mdi-repeat-variant </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
+                        </v-btn> -->
+                        <!-- <v-btn icon class="ma-0 pa-0">
                           <v-icon> mdi-chat </v-icon>
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon >mdi-share-variant-outline</v-icon>
-                        </v-btn>
+                        </v-btn> -->
                       </v-card-actions>
                     </div>
                     <div>
@@ -160,7 +101,7 @@
                       </v-btn>
                     </div>
                     <div>
-                      <p class="mb-0 pt-1">Date / Time</p>
+                      <p class="mb-0 pt-1">{{posts.timestamp}}</p>
                     </div>
                   </div>
                   </div>
