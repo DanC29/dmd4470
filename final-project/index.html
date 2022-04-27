@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+
+    <!-- Vue CDN -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Source Cloud Firestore from the Google CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="sign-in">
+      <v-app>
+        <v-main>
+          <v-container fill-height fluid>
+            <v-row no-gutters justify="center" class="align-center">
+              <v-col sm="8" md="6">
+                <v-card elevation="0">
+                  <v-form>
+                    <v-row class="d-flex flex-column pa-5">
+                      <v-col>
+                        <h1 class="text-center">WELCOME BACK</h1>
+                        <h3 class="text-center">What's On Your Mind?</h3>
+                      </v-col>
+                      <v-col class="pb-0 mb-0">
+                        <v-text-field
+                          id="username"
+                          type="text"
+                          v-model="username"
+                          placeholder="Username"
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                      <v-col>
+                        <v-text-field
+                          class="pt-0 mt-0"
+                          id="password"
+                          type="password"
+                          v-model="password"
+                          placeholder="Password"
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                      <v-col>
+                        <v-btn block class="mr-2" @click="signUserIn()">
+                          <p class="ma-0 pl-2">Sign In</p>
+                        </v-btn>
+                        <p class="mt-5">
+                          <a href="create-account.html" class="create-link"
+                            >Get Connected</a
+                          >
+                        </p>
+                      </v-col>
+                      <!-- <v-col>
+                        <h3 class="text-center">Sign In With</h3>
+                      </v-col> -->
+                      <!-- <v-row class="flex-column">
+                        <v-col>
+                          <v-btn block class="ml-2">
+                            <v-icon> mdi-send </v-icon>
+                            <p class="ma-0 pl-2">Google</p>
+                          </v-btn>
+                        </v-col>
+                        <v-col>
+                          <v-btn block class="ml-2">
+                            <v-icon> mdi-send </v-icon>
+                            <p class="ma-0 pl-2">Facebook</p>
+                          </v-btn>
+                        </v-col>
+                        <v-col>
+                          <v-btn block class="ml-2">
+                            <v-icon> mdi-send </v-icon>
+                            <p class="ma-0 pl-2">Apple</p>
+                          </v-btn>
+                        </v-col>
+                      </v-row> -->
+                    </v-row>
+                  </v-form>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
+    </div>
+    <!-- Vue JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- My JS -->
+    <script>
+      var createNewPost = new Vue({
+        el: "#sign-in",
+        vuetify: new Vuetify(),
+        data: function () {
+          return {
+            username: "",
+            password: "",
+          };
+        },
+        methods: {
+          signUserIn: function () {
+            var docRef = db
+              .collection("users")
+              .doc(document.getElementById("username").value);
+            console.log(document.getElementById("username").value);
+            docRef.get().then((doc) => {
+              if (doc.exists) {
+                if (
+                  document.getElementById("password").value ===
+                  doc.data().password
+                ) {
+                  localStorage.setItem(
+                    "user",
+                    document.getElementById("username").value
+                  );
+
+                  window.location.replace("feed.html");
+                } else {
+                  alert("Incorrect password.");
+                }
+              } else {
+                alert(
+                  'Username not recognized. To make an account, click "Sign Up."'
+                );
+              }
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Post</title>
+    <title>Create Account</title>
 
     <!-- Vue CDN -->
     <link
@@ -29,58 +29,53 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="sign-in">
+    <div id="profile-setup">
       <v-app>
         <v-main>
           <v-container fill-height fluid>
             <v-row no-gutters justify="center" class="align-center">
               <v-col sm="8" md="6">
-                <v-card>
+                <v-card elevation="0">
                   <v-form>
                     <v-row class="d-flex flex-column pa-5">
                       <v-col>
-                        <h3 class="text-center">Create A New Account</h3>
+                        <h1 class="text-center">Still Thinking</h1>
+                        <h3 class="text-center">Let's Get Brainstorming</h3>
                       </v-col>
                       <v-col>
                         <v-text-field
-                          type="email"
-                          placeholder="Email"
+                          id="first"
+                          type="text"
+                          v-model="first"
+                          placeholder="Firstname"
+                          required
+                          outlined
                         ></v-text-field>
                       </v-col>
                       <v-col>
                         <v-text-field
-                          type="password"
-                          placeholder="Password"
+                          id="last"
+                          type="text"
+                          v-model="last"
+                          placeholder="Lastname"
+                          required
+                          outlined
                         ></v-text-field>
                       </v-col>
                       <v-col>
-                        <v-btn block class="mr-2">
-                          <p class="ma-0 pl-2">Create Account</p>
+                        <v-text-field
+                          id="bio"
+                          type="text"
+                          v-model="bio"
+                          placeholder="Bio"
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                      <v-col>
+                        <v-btn block @click="profileDetails()" class="mr-2">
+                          <p class="ma-0 pl-2">Save Changes</p>
                         </v-btn>
                       </v-col>
-                      <v-col>
-                        <h3 class="text-center">Sign In With</h3>
-                      </v-col>
-                      <v-row class="flex-column">
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Google</p>
-                          </v-btn>
-                        </v-col>
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Facebook</p>
-                          </v-btn>
-                        </v-col>
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Apple</p>
-                          </v-btn>
-                        </v-col>
-                      </v-row>
                     </v-row>
                   </v-form>
                 </v-card>
@@ -97,10 +92,35 @@
     <!-- My JS -->
     <script>
       var createNewPost = new Vue({
-        el: "#sign-in",
+        el: "#profile-setup",
         vuetify: new Vuetify(),
         data: function () {
-          return {};
+          return {
+            bio: "",
+            first: "",
+            last: "",
+          };
+        },
+        methods: {
+          profileDetails() {
+            const userRef = db
+              .collection("users")
+              .doc(localStorage.getItem("user"));
+
+            userRef
+              .update({
+                first: document.getElementById("first").value,
+                last: document.getElementById("last").value,
+                bio: document.getElementById("bio").value,
+              })
+              .then(() => {
+                console.log("Document successfully written!");
+                window.location.replace("feed.html");
+              })
+              .catch((error) => {
+                console.error("Error writing document: ", error);
+              });
+          },
         },
       });
     </script>

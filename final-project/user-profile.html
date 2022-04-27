@@ -33,42 +33,33 @@
       <v-app>
         <!-- Must have the app property -->
         <v-app-bar app>
-          <v-btn icon>
-            <v-icon> mdi-bell </v-icon>
-          </v-btn>
+
           <v-spacer> </v-spacer>
           <v-toolbar-title>Steve G</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon> mdi-inbox </v-icon>
-          </v-btn>
+
         </v-app-bar>
     
-          <v-bottom-navigation app
-          shift>
-            <!-- <v-btn>
-              <p>Search</p>
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn> -->
+        <v-bottom-navigation app
+        >    
+          <v-btn href="direct-messages.html">
+      
+            <v-icon>mdi-inbox</v-icon>
+          </v-btn>
 
-            <v-btn href="new-post.html">
-              <p>New Post</p>
-              <v-icon>mdi-plus-box</v-icon>
-            </v-btn>
+          <v-btn href="feed.html" class="rounded-50">
+            <v-icon>mdi-home</v-icon>
+          </v-btn>
 
-            <v-btn href="feed.html">
-              <p>Home</p>
-              <v-icon>mdi-home</v-icon>
-            </v-btn>
-
-            <v-btn href="user-profile.html">
-              <p>Profile</p>
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          </v-bottom-navigation>
+          <v-btn href="my-profile.html">
+            
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+          
+        </v-bottom-navigation>
 
         <v-main>
-        <v-container class="pa-0">
+        <v-container class="pa-0 overflow-hidden">
           <v-row no-gutters justify="center">
             <v-col sm="6" md="6" class="pa-0">
                   <v-row
@@ -107,18 +98,14 @@
                       </v-card-title>
                     </v-col>
                   </v-row>
-                  <v-row no-gutters justify="center" class="flex-row align-center text-center">
-                    <v-col class="pt-3 pb-3 pl-5 pr-2">
-                      <v-btn block>
-                        <v-icon> mdi-plus </v-icon>
-                        <p class="ma-0 pl-2">Follow</p>
-                      </v-btn>
-                    </v-col>
-                    <v-col class="pt-3 pb-3 pl-2 pr-5">
-                      <v-btn block>
-                        <v-icon> mdi-send </v-icon>
-                        <p class="ma-0 pl-2">Message</p>
-                      </v-btn>
+                  <v-row no-gutters justify="center" class="align-center">
+                    <v-col class="pt-3 pb-3 pl-5 pr-5">
+                      <div>
+                        <v-btn block>
+                          <v-icon> mdi-account-edit </v-icon>
+                          <p class="ma-0 pl-2">Edit Profile</p>
+                        </v-btn>
+                      </div>
                     </v-col>
                   </v-row>
             </v-col>

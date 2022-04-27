@@ -5,9 +5,13 @@ var feedPage = new Vue({
   data: function () {
     return {
       app_title: "Still Thinking",
+      dialog: false,
       posts: [],
+      likeIcon: "cards-heart-outline",
+      likedIcon: "mdi-heart",
     };
   },
+
   methods: {
     getPosts: function () {
       // get the tweets from the firestore database and prep them for display
@@ -21,14 +25,35 @@ var feedPage = new Vue({
               caption: doc.data().caption,
               likes: doc.data().likes,
               timestamp: doc.data().timestamp,
+              createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
+              createdTime: doc.data().timestamp.toDate().toLocaleTimeString(),
               username: doc.data().username,
             });
           });
         });
     },
 
+    newPost: function () {
+      db.collection("posts")
+        .add({
+          username: localStorage.getItem("user"),
+          likes: [],
+          //id: this.posts.id,
+          caption: this.posts.caption,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    },
+
     likePost: function (docID) {
       var docRef = db.collection("posts").doc(docID);
+
+      this.likeIcon = this.likeIcon ? this.likedIcon : this.likeIcon;
 
       // Set the "capital" field of the city 'DC'
 
@@ -46,17 +71,13 @@ var feedPage = new Vue({
           console.error("Error updating document: ", error);
         });
     },
+    logout: function () {
+      localStorage.clear();
+      window.location.replace("index.html");
+    },
   },
+
   mounted() {
     this.getPosts();
   },
 });
-
-/* // BOTTOM NAV
-var bottomNav = new Vue({
-  el: "#bottom-nav",
-  vuetify: new Vuetify(),
-  data: function () {
-    return {};
-  },
-}); */

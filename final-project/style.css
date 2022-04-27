@@ -5,7 +5,36 @@
   width: 100%;
 }
 
+.v-toolbar_title {
+  color: #F3ECDA;
+}
+
+#feed-bar {
+  background-color: #2a2a2a;
+}
+.header-title {
+  color: #3dba92;
+  text-align: center;
+}
+#feed-nav {
+  background-color: #39876E;
+}
+.mac {
+  background-color: #171717;
+}
 .card-styles {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+background-color: #646E73;
+}
+
+#add-post { 
+  background-color: #E3B2CC;
+}
+
+#btn-icon {
+  color: #121212;
+}
+
+.create-link {
+  text-decoration: none;
+  margin-top: 1rem;
 }

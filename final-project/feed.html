@@ -32,59 +32,123 @@
     <div id="feed-page">
       <v-app>
         <!-- Must have the app property -->
-        <v-app-bar app class="feed-app-bar">
-
-          <v-spacer> </v-spacer>
-          <v-toolbar-title>Still Thinking</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon> mdi-inbox </v-icon>
+        <v-app-bar app id="feed-bar">
+          <v-btn
+          color="white"
+          text
+          @click="logout()"
+          >
+          <v-icon>
+            mdi-logout
+          </v-icon>
           </v-btn>
+          <v-spacer> </v-spacer>
+          <v-toolbar-title><h3 class="header-title">Still Thinking</h3></v-toolbar-title>
+          <v-spacer></v-spacer>         
         </v-app-bar>
         
-          <v-bottom-navigation app
-          >            
-            <v-btn href="feed.html">
         
-              <v-icon>mdi-home</v-icon>
+          <v-bottom-navigation app id="feed-nav"
+          >    
+            <v-btn href="direct-messages.html">
+        
+              <v-icon color="white">mdi-inbox</v-icon>
             </v-btn>
 
-            <v-btn href="new-post.html" class="rounded-50">
-              <v-icon>mdi-plus</v-icon>
+            <v-btn href="feed.html" class="rounded-50">
+              <v-icon color="white">mdi-home</v-icon>
             </v-btn>
 
-            <v-btn href="user-profile.html">
+            <v-btn href="my-profile.html">
               
-              <v-icon>mdi-account</v-icon>
+              <v-icon color="white">mdi-account</v-icon>
             </v-btn>
             
           </v-bottom-navigation>
-   
+          
 
-        <v-main>
-          <v-container class="pa-0 mt-5">
-            
+
+        <v-main class="mac">
+          <v-container   class="pa-0 mt-1 overflow-hidden">
+          <v-row>
+              <v-col sm="6" md="6">
+                      <v-dialog
+                        transition="dialog-bottom-transition"
+                        max-width="600"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                          class="mb-5"
+                                id="add-post"
+                                
+                                small
+                                fixed
+                                bottom
+                                right
+                                fab
+                                @click="dialog = !dialog"
+                                v-bind="attrs"
+                            v-on="on"
+                              >
+                                <v-icon>mdi-plus</v-icon>
+                              </v-btn>
+                        </template>
+                        <template v-slot:default="dialog">
+                          <v-card>
+                            
+                            <v-toolbar>
+                              <h3 class="text-center">What's Your Idea?</h3>
+                            </v-toolbar>
+                            <v-card-text class="pa-4 pb-1 pt-2">
+                              <v-form>
+                                <v-text-field
+                                            type="text"
+                                            placeholder="Caption"
+                                            v-model="posts.caption"
+                                          ></v-text-field>
+                              </v-form>
+                            </v-card-text>
+                            <v-card-actions class="pa-4 pt-1">
+                              <v-btn @click="newPost()">
+                                <v-icon> mdi-send </v-icon>
+                                <p class="ma-0 pl-2">Post</p>
+                              </v-btn>
+                              <v-spacer>
+                                
+                              </v-spacer>
+                              <v-btn
+                                
+                                @click="dialog.value = false"
+                              >
+                              <v-icon>mdi-close-circle</v-icon>
+                              <p class="ma-0 pl-2">Close</p></v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </template>
+                      </v-dialog>
+              </v-col>
+            </v-row>  
             <v-row
               no-gutters
               justify="space-around"
               class="flex-column align-center"
             >
-              <v-col v-for="posts in posts" sm="6" md="4">
-                <v-card elevation="0" class="card-styles rounded-0" >
-                  <div class="pa-5">
+              <v-col v-for="posts in posts" :key="posts.id" sm="6" md="4" >
+                <v-card elevation="0" class="rounded-0 mb-1" >
+                  <div class="pa-5 card-styles">
                     <div class="d-flex flex-no-wrap pb-2">
                       <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
                       <h3 class="ml-1">{{posts.username}}</h3>
                     </div>
                     <div>
                       <v-card-title class="pa-0 pb-1">
-                        <p class="ma-0">{{posts.caption}}</p>
+                        <p class="ma-0 ">{{posts.caption}}</p>
                       </v-card-title>
                     </div>
                     <div>
                       <v-card-actions class="pa-0 pt-1">
                         <v-btn icon class="ma-0 pa-0" @click="likePost(posts.id)">
-                          <v-icon> mdi-heart </v-icon>
+                          <v-icon> <!-- mdi-heart --> {{likeIcon}}</v-icon>
                         </v-btn>
                         
                         <!-- <v-btn icon class="ma-0 pa-0">
@@ -95,13 +159,14 @@
                         </v-btn> -->
                       </v-card-actions>
                     </div>
-                    <div>
+                   <!--  <div>
                       <v-btn text class="pa-0">
                         <p class="mb-0 pt-1">View All Comments</p>
                       </v-btn>
-                    </div>
-                    <div>
-                      <p class="mb-0 pt-1">{{posts.timestamp}}</p>
+                    </div> -->
+                    <div class="d-flex flex-row">
+                      <p class="mb-0 pr-2">{{posts.createdDate}}</p>
+                      <p class="mb-0 pl-2">{{posts.createdTime}}</p>
                     </div>
                   </div>
                   </div>

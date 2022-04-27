@@ -33,42 +33,33 @@
       <v-app>
         <!-- Must have the app property -->
         <v-app-bar app>
-          <v-btn icon>
-            <v-icon> mdi-bell </v-icon>
-          </v-btn>
+    
           <v-spacer> </v-spacer>
           <v-toolbar-title>{{user_name}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon> mdi-inbox </v-icon>
-          </v-btn>
+  
         </v-app-bar>
     
-          <v-bottom-navigation app
-          shift>
-<!--             <v-btn>
-              <p>Search</p>
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn> -->
+        <v-bottom-navigation app
+        >    
+          <v-btn href="direct-messages.html">
+      
+            <v-icon>mdi-inbox</v-icon>
+          </v-btn>
 
-            <v-btn href="new-post.html">
-              <p>New Post</p>
-              <v-icon>mdi-plus-box</v-icon>
-            </v-btn>
+          <v-btn href="feed.html" class="rounded-50">
+            <v-icon>mdi-home</v-icon>
+          </v-btn>
 
-            <v-btn href="feed.html">
-              <p>Home</p>
-              <v-icon>mdi-home</v-icon>
-            </v-btn>
-
-            <v-btn href="user-profile.html">
-              <p>Profile</p>
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          </v-bottom-navigation>
+          <v-btn href="my-profile.html">
+            
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+          
+        </v-bottom-navigation>
 
         <v-main>
-        <v-container class="pa-0">
+        <v-container class="pa-0 overflow-hidden">
           <v-row no-gutters justify="center">
             <v-col sm="6" md="6" class="pa-0">
                   <v-row
@@ -97,10 +88,10 @@
                           />
                         </v-avatar>
                         <v-col class="pa-0 pl-3 d-inline">
-                          <p class="ma-0 pa-0">John Doe</p>
+                          <p class="ma-0 pa-0">{{first}} {{last}}</p>
                           <v-card-subtitle class="pa-0">
                             <p class="ma-0">
-                              Hello I'm John and I have 11 dogs and 7 cats!
+                              {{bio}}
                             </p>
                           </v-card-subtitle>
                         </v-col>
@@ -110,10 +101,80 @@
                   <v-row no-gutters justify="center" class="align-center">
                     <v-col class="pt-3 pb-3 pl-5 pr-5">
                       <div>
-                        <v-btn block>
-                          <v-icon> mdi-account-edit </v-icon>
-                          <p class="ma-0 pl-2">Edit Profile</p>
-                        </v-btn>
+                        <template>
+                          <div class="text-center">
+                            <v-dialog
+                              v-model="dialog"
+                              width="500"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  block
+                                  v-bind="attrs"
+                                  v-on="on"
+                                >
+                                <v-icon> mdi-account-edit </v-icon>
+                                <p class="ma-0 pl-2">Edit Profile</p>
+                                </v-btn>
+                              </template>
+                        
+                              <v-card>
+                                <v-card-title class="text-h5 grey lighten-2">
+                                  Edit Profile
+                                </v-card-title>
+                        
+                                <v-col>
+                                  <v-text-field
+                                    id="first"
+                                    type="text"
+                                    v-model="first"
+                                    placeholder="Firstname"
+                                    required
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col>
+                                  <v-text-field
+                                    id="last"
+                                    type="text"
+                                    v-model="last"
+                                    placeholder="Lastname"
+                                    required
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col>
+                                  <v-text-field
+                                    id="bio"
+                                    type="text"
+                                    v-model="bio"
+                                    placeholder="Bio"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-divider></v-divider>
+                        
+                                <v-card-actions>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="dialog = false"
+                                  >
+                                  <p>Cancel</p>
+                                  </v-btn>
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="saveProfile()"
+                                  >
+                                  <p>Save Changes</p>
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </div>
+                        </template>
                       </div>
                     </v-col>
                   </v-row>
@@ -126,96 +187,48 @@
               justify="space-around"
               class="flex-column align-center"
             >
-              <v-col sm="6" md="6">
-                <v-card elevation="0" class="card-styles">
-                  <div class="pa-5" >
-                    <div class="d-flex flex-no-wrap pb-2">
-                      <v-avatar color="black" size="26" class="mr-1"></v-avatar>
-                      <h3 class="ml-1">John Doe</h3>
-                    </div>
-                    <div>
-                      <v-card-title class="pa-0 pb-2">
-                        <p class="ma-0">Random Caption</p>
-                      </v-card-title>
-                    </div>
-                    <div>
-                      <v-img
-                        :aspect-ratio="16/9"
-                        
-                        src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-                      >
-                      </v-img>
-                    </div>
-                    <div>
-                      <v-card-actions class="pa-0 pt-2">
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-heart </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-repeat-variant </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-chat </v-icon>
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon>mdi-share-variant-outline</v-icon>
-                        </v-btn>
-                      </v-card-actions>
-                    </div>
-                    <div>
-                      <v-btn text class="pa-0 pt-1">
-                        <p class="mb-0">View All Comments</p>
-                      </v-btn>
-                    </div>
-                    <div>
-                      <p class="mb-0 pt-1">Date / Time</p>
-                    </div>
-                  </div>
-                </v-card>
-              </v-col>
+              
+          
 
-              <v-col sm="6" md="6">
-                <v-card elevation="0" class="card-styles">
-                  <div class="pa-5">
-                    <div class="d-flex flex-no-wrap pb-2">
-                      <v-avatar color="black" size="26" class="mr-1"></v-avatar>
-                      <h3 class="ml-1">John Doe</h3>
-                    </div>
-                    <div>
-                      <v-card-title class="pa-0 pb-2">
-                        <p class="ma-0">Random Caption</p>
-                      </v-card-title>
-                    </div>
-                    <div>
-                      <v-card-actions class="pa-0 pt-2">
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-heart </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-repeat-variant </v-icon>
-                        </v-btn>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-chat </v-icon>
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon class="ma-0 pa-0">
-                          <v-icon>mdi-share-variant-outline</v-icon>
-                        </v-btn>
-                      </v-card-actions>
-                    </div>
-                    <div>
-                      <v-btn text class="pa-0">
-                        <p class="mb-0 pt-1">View All Comments</p>
+            <v-col v-for="posts in posts" :key="posts.id" sm="6" md="4" >
+              <v-card elevation="0" class="rounded-0 mb-1" >
+                <div class="pa-5 card-styles">
+                  <div class="d-flex flex-no-wrap pb-2">
+                    <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
+                    <h3 class="ml-1">{{posts.username}}</h3>
+                  </div>
+                  <div>
+                    <v-card-title class="pa-0 pb-1">
+                      <p class="ma-0 ">{{posts.caption}}</p>
+                    </v-card-title>
+                  </div>
+                  <div>
+                    <v-card-actions class="pa-0 pt-1">
+                      <v-btn icon class="ma-0 pa-0" @click="likePost(posts.id)">
+                        <v-icon> mdi-heart</v-icon>
                       </v-btn>
-                    </div>
-                    <div>
-                      <p class="mb-0 pt-1">Date / Time</p>
-                    </div>
+                      
+                      <!-- <v-btn icon class="ma-0 pa-0">
+                        <v-icon> mdi-repeat-variant </v-icon>
+                      </v-btn> -->
+                      <!-- <v-btn icon class="ma-0 pa-0">
+                        <v-icon> mdi-chat </v-icon>
+                      </v-btn> -->
+                    </v-card-actions>
                   </div>
+                 <!--  <div>
+                    <v-btn text class="pa-0">
+                      <p class="mb-0 pt-1">View All Comments</p>
+                    </v-btn>
+                  </div> -->
+                  <div class="d-flex flex-row">
+                    <p class="mb-0 pr-2">{{posts.createdDate}}</p>
+                    <p class="mb-0 pl-2">{{posts.createdTime}}</p>
                   </div>
-                </v-card>
-              </v-col>
+                </div>
+                </div>
+              </v-card>
+            </v-col>
             </v-row>
           </v-container>
           
@@ -234,8 +247,62 @@
   vuetify: new Vuetify(),
   data: function () {
     return {
-      user_name: "John Doe",
+      dialog: false,
+      first: "",
+      last: "",
+      bio: "",
+      user_name: localStorage.getItem("user"),
+      posts: [],
     };
+  },
+  methods: {
+    profileInfo () {
+      var docRef = db.collection("users").doc(localStorage.getItem('user'));
+        docRef.get().then((doc) => {
+            this.first = doc.data().first,
+            this.last = doc.data().last,
+            this.bio = doc.data().bio
+        })
+    },
+    getUserPosts(){
+        db.collection("posts").where("username", "==", localStorage.getItem('user'))
+          .onSnapshot((querySnapshot) => {
+            this.posts = []
+            querySnapshot.forEach((doc) =>
+            this.posts.push({
+              id: doc.id,
+              caption: doc.data().caption,
+              likes: doc.data().likes,
+              timestamp: doc.data().timestamp,
+              createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
+              createdTime: doc.data().timestamp.toDate().toLocaleTimeString(),
+              username: doc.data().username,
+            }))
+          })    
+      },
+    saveProfile() {
+      const userRef = db
+              .collection("users")
+              .doc(localStorage.getItem("user"));
+
+            userRef
+              .update({
+                first: document.getElementById("first").value,
+                last: document.getElementById("last").value,
+                bio: document.getElementById("bio").value,
+              })
+              .then(() => {
+                console.log("Document successfully written!");
+                dialog = false;
+              })
+              .catch((error) => {
+                console.error("Error writing document: ", error);
+              });
+    },
+  },
+  mounted() {
+    this.getUserPosts();
+    this.profileInfo();
   },
 });
     </script>

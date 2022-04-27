@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Friend Profile</title>
+    <title>Messages</title>
 
     <!-- Vue CDN -->
     <link
@@ -20,95 +20,214 @@
       rel="stylesheet"
     />
 
+    <!-- Source Cloud Firestore from the Google CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <div id="profile-header">
-        <v-app>
-          <v-app-bar fixed>
-            <v-spacer></v-spacer>
+    <div id="direct-messages">
+      <v-app>
+        <!-- Must have the app property -->
+        <v-app-bar app>
+          <v-spacer> </v-spacer>
+          <v-toolbar-title>Messages</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-app-bar>
 
-            <v-toolbar-title>{{user_name}}</v-toolbar-title>
+        <v-bottom-navigation app>
+          <v-btn href="direct-messages.html">
+            <v-icon>mdi-inbox</v-icon>
+          </v-btn>
 
-            <v-spacer></v-spacer>
-          </v-app-bar>
-        </v-app>
-      </div>
-    </header>
-    <main>
-      <div id="personal-profile-top">
-        <v-app>
-          <v-container fluid class="pa-0">
-            <v-row justify="center" no-gutters>
-              <v-col lg="8">
-                <v-card outlined elevation="0" class="pt-3 pb-3">
-                  <v-row no-gutters justify="space-around" class="align-center">
-                    <v-col-6>
-                      <v-card-title class="black--text pa-0">
-                        <v-avatar size="32">
+          <v-btn href="feed.html" class="rounded-50">
+            <v-icon>mdi-home</v-icon>
+          </v-btn>
+
+          <v-btn href="my-profile.html">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
+
+        <v-main>
+          <v-container class="overflow-hidden">
+            <v-row justify="center">
+              <v-dialog
+                v-model="dialog"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
+              >
+                <template v-slot:activator="{ on, attrs }" v-for="(item, index) in items">
+                  <v-card elevation="0">
+
+                    <v-list-item :key="item.title" v-bind="attrs" v-on="on">
+                      <template v-slot:default="{ active }">
+                        <v-avatar size="45">
                           <img
                             alt="user"
                             src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
                           />
                         </v-avatar>
-                        <v-col class="pa-0 pl-3 d-inline">
-                          <p class="ma-0 pa-0">John Doe</p>
-                          <v-card-subtitle class="pa-0">
-                            <p class="ma-0">
-                              Hey! Did you...
-                            </p>
-                          </v-card-subtitle>
-                        </v-col>
-                      </v-card-title>
-                    </v-col-6>
-                    <v-col-4 class="text-center align-center">
-                      <p class="pa-0 ma-0">tap to chat</p>
-                    </v-col>
-                  </v-row>
+                        <v-list-item-content class="pl-2">
+                          <v-list-item-title
+                            v-text="item.username"
+                          ></v-list-item-title>
+
+                          <v-list-item-subtitle
+                            v-text="item.messagePreview"
+                          ></v-list-item-subtitle>
+                        </v-list-item-content>
+
+                        <v-list-item-action>
+                          <v-list-item-action-text
+                            v-text="item.timestamp"
+                          ></v-list-item-action-text>
+
+                          <v-icon color="grey lighten-1">
+                            mdi-chevron-right
+                          </v-icon>
+                        </v-list-item-action>
+                      </template>
+                    </v-list-item>
+                    <v-divider
+                        ></v-divider>
+                  </v-card>
+                    
+                  </v-card>
+                  <!-- <v-list two-line>
+                    <v-list-item-group>
+                      <template v-for="(item, index) in items">
+                        <v-list-item :key="item.title" v-bind="attrs" v-on="on">
+                          <template v-slot:default="{ active }">
+                            <v-avatar size="45">
+                              <img
+                                alt="user"
+                                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                              />
+                            </v-avatar>
+                            <v-list-item-content class="pl-2">
+                              <v-list-item-title
+                                v-text="item.username"
+                              ></v-list-item-title>
+
+                              <v-list-item-subtitle
+                                v-text="item.messagePreview"
+                              ></v-list-item-subtitle>
+                            </v-list-item-content>
+
+                            <v-list-item-action>
+                              <v-list-item-action-text
+                                v-text="item.timestamp"
+                              ></v-list-item-action-text>
+
+                              <v-icon color="grey lighten-1">
+                                mdi-chevron-right
+                              </v-icon>
+                            </v-list-item-action>
+                          </template>
+                        </v-list-item>
+
+                        <v-divider
+                          v-if="index < items.length - 1"
+                          :key="index"
+                        ></v-divider>
+                      </template>
+                    </v-list-item-group>
+                  </v-list> -->
+                </template>
+                <v-card>
+                  <v-toolbar dark color="primary">
+                    <v-btn icon dark @click="dialog = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Settings</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                      <v-btn dark text @click="dialog = false"> Save </v-btn>
+                    </v-toolbar-items>
+                  </v-toolbar>
+                  <v-container>
+                    <v-row
+                      no-gutters
+                      justify="center"
+                      class="flex-column align-center"
+                    >
+                      <v-col
+                        sm="6"
+                        md="6"
+                        class="d-flex flex-row justify-start"
+                      >
+                        <v-avatar size="25">
+                          <img
+                            alt="user"
+                            src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                          />
+                        </v-avatar>
+                        <p class="ma-0 pl-2">message from</p>
+                      </v-col>
+                      <v-col sm="6" md="6" class="d-flex flex-row justify-end">
+                        <p class="ma-0 pr-2">message to</p>
+                        <v-avatar size="25">
+                          <img
+                            alt="user"
+                            src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                          />
+                        </v-avatar>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container>
+                    <v-row justify="center" class="flex-row align-center">
+                      <v-col sm="6" md="6">
+                        <v-form>
+                          <v-text-field
+                            type="text"
+                            placeholder="Message"
+                            outlined
+                          >
+                          </v-text-field>
+                        </v-form>
+                      </v-col>
+                      <v-btn icon>
+                        <v-icon> mdi-send </v-icon>
+                      </v-btn>
+                    </v-row>
+                  </v-container>
                 </v-card>
-              </v-col>
+              </v-dialog>
             </v-row>
           </v-container>
-        </v-app>
-      </div>
-
-      <div id="bottom-nav">
-        <v-app>
-          <v-container fluid>
-            <v-row>
-              <v-bottom-navigation shift fixed>
-                <v-btn>
-                  <p>Search</p>
-                  <v-icon>mdi-magnify</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>New Post</p>
-                  <v-icon>mdi-plus-box</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Home</p>
-                  <v-icon>mdi-home</v-icon>
-                </v-btn>
-
-                <v-btn>
-                  <p>Profile</p>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-bottom-navigation>
-            </v-row>
-          </v-container>
-        </v-app>
-      </div>
-    </main>
+        </v-main>
+      </v-app>
+    </div>
     <!-- Vue JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
     <!-- My JS -->
-    <script src="script.js"></script>
+    <script>
+      var profileHeader = new Vue({
+        el: "#direct-messages",
+        vuetify: new Vuetify(),
+        data: function () {
+          return {
+            dialog: false,
+            user_name: "John Doe",
+            /* selected: [2], */
+            items: [
+              {
+                timestamp: "15 min",
+                messagePreview: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+                username: "Ali Connors",
+              },
+            ],
+          };
+        },
+      });
+    </script>
   </body>
 </html>
