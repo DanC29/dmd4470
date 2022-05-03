@@ -32,28 +32,92 @@
     <div id="direct-messages">
       <v-app>
         <!-- Must have the app property -->
-        <v-app-bar app>
+        <v-app-bar app id="feed-bar">
           <v-spacer> </v-spacer>
-          <v-toolbar-title>Messages</v-toolbar-title>
+          <v-toolbar-title class="header-title">Messages</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-app-bar>
 
-        <v-bottom-navigation app>
+        <v-bottom-navigation app id="feed-nav">
           <v-btn href="direct-messages.html">
-            <v-icon>mdi-inbox</v-icon>
+            <v-icon style="color: #F46036;">mdi-inbox </v-icon>
           </v-btn>
 
           <v-btn href="feed.html" class="rounded-50">
-            <v-icon>mdi-home</v-icon>
+            <v-icon style="color: #F1F2EB;">mdi-home </v-icon>
           </v-btn>
 
           <v-btn href="my-profile.html">
-            <v-icon>mdi-account</v-icon>
+            <v-icon style="color: #F1F2EB;">mdi-account </v-icon>
           </v-btn>
         </v-bottom-navigation>
 
-        <v-main>
+        <v-main class="uni-bkg">
           <v-container class="overflow-hidden">
+            <v-row>
+              <v-col cols="auto">
+                <v-dialog
+                  transition="dialog-bottom-transition"
+                  max-width="600"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                          class="mb-5"
+                          style="background-color: #F46036;"
+                                
+                                small
+                                fixed
+                                bottom
+                                right
+                                fab
+                                
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                <v-icon  style="color: #252627;">mdi-plus</v-icon>
+                              </v-btn>
+                  
+                  </template>
+                  <template v-slot:default="dialog">
+                    <v-card style="background-color: #F1F2EB;">
+                      <v-toolbar
+                      style="background-color: #515052;"
+                        dark
+                      ><h3 class="text-center" style="color: #F1F2EB;">Send A New Message</h3></v-toolbar>
+                      
+                      <v-card-text class="pa-4 pb-1 pt-2">
+                        <v-form>
+                          <v-overflow-btn
+        class="my-2"
+        :items="dropdown_edit"
+        label="Send To"
+        
+        item-value="text"
+      ></v-overflow-btn>
+      <v-text-field
+      type="text"
+      placeholder="Message"
+      
+    ></v-text-field>
+                        </v-form>
+                      </v-card-text>
+                      <v-card-actions class="pa-4 pt-1">
+                        <v-btn text>
+                          <v-icon> mdi-send </v-icon>
+                          <p class="ma-0 pl-2">Send</p>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          @click="dialog.value = false"
+                        ><v-icon>mdi-close-circle</v-icon>
+                        <p class="ma-0 pl-2">Close</p></v-btn></v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+                </v-dialog>
+              </v-col>
+            </v-row>
             <v-row justify="center">
               <v-dialog
                 v-model="dialog"
@@ -62,37 +126,38 @@
                 transition="dialog-bottom-transition"
               >
                 <template v-slot:activator="{ on, attrs }" v-for="(item, index) in items">
-                  <v-card elevation="0">
-
-                    <v-list-item :key="item.title" v-bind="attrs" v-on="on">
-                      <template v-slot:default="{ active }">
-                        <v-avatar size="45">
-                          <img
-                            alt="user"
-                            src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
-                          />
-                        </v-avatar>
-                        <v-list-item-content class="pl-2">
-                          <v-list-item-title
-                            v-text="item.username"
-                          ></v-list-item-title>
-
-                          <v-list-item-subtitle
-                            v-text="item.messagePreview"
-                          ></v-list-item-subtitle>
-                        </v-list-item-content>
-
-                        <v-list-item-action>
-                          <v-list-item-action-text
-                            v-text="item.timestamp"
-                          ></v-list-item-action-text>
-
-                          <v-icon color="grey lighten-1">
-                            mdi-chevron-right
-                          </v-icon>
-                        </v-list-item-action>
-                      </template>
-                    </v-list-item>
+                  <v-card elevation="0" >
+                    <div class="card-styles"> 
+                      <v-list-item :key="item.title" v-bind="attrs" v-on="on">
+                        <template v-slot:default="{ active }">
+                          <v-avatar size="45">
+                            <img
+                              alt="user"
+                              src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                            />
+                          </v-avatar>
+                          <v-list-item-content class="pl-2">
+                            <v-list-item-title
+                              v-text="item.username"
+                            ></v-list-item-title>
+  
+                            <v-list-item-subtitle
+                              v-text="item.messagePreview"
+                            ></v-list-item-subtitle>
+                          </v-list-item-content>
+  
+                          <v-list-item-action>
+                            <v-list-item-action-text
+                              v-text="item.timestamp"
+                            ></v-list-item-action-text>
+  
+                            <v-icon color="grey lighten-1">
+                              mdi-chevron-right
+                            </v-icon>
+                          </v-list-item-action>
+                        </template>
+                      </v-list-item>
+                    </div>
                     <v-divider
                         ></v-divider>
                   </v-card>
@@ -215,6 +280,14 @@
         vuetify: new Vuetify(),
         data: function () {
           return {
+            dropdown_edit: [
+        { text: '100%' },
+        { text: '75%' },
+        { text: '50%' },
+        { text: '25%' },
+        { text: '0%' },
+      ],
+            newMessage: false,
             dialog: false,
             user_name: "John Doe",
             /* selected: [2], */
@@ -226,6 +299,23 @@
               },
             ],
           };
+        },
+        methods: {
+          newDM: function () {
+      db.collection("messages")
+        .add({
+          username: localStorage.getItem("user"),
+          id: this.posts.id,
+          message: this.posts.caption,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    },
         },
       });
     </script>

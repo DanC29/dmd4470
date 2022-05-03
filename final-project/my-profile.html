@@ -32,33 +32,33 @@
     <div id="profile-page">
       <v-app>
         <!-- Must have the app property -->
-        <v-app-bar app>
+        <v-app-bar app id="feed-bar">
     
           <v-spacer> </v-spacer>
-          <v-toolbar-title>{{user_name}}</v-toolbar-title>
+          <v-toolbar-title class="header-title">{{user_name}}</v-toolbar-title>
           <v-spacer></v-spacer>
   
         </v-app-bar>
     
-        <v-bottom-navigation app
+        <v-bottom-navigation app id="feed-nav" 
         >    
           <v-btn href="direct-messages.html">
       
-            <v-icon>mdi-inbox</v-icon>
+            <v-icon style="color: #F1F2EB;">mdi-inbox</v-icon>
           </v-btn>
 
           <v-btn href="feed.html" class="rounded-50">
-            <v-icon>mdi-home</v-icon>
+            <v-icon style="color: #F1F2EB;" >mdi-home</v-icon>
           </v-btn>
 
           <v-btn href="my-profile.html">
             
-            <v-icon>mdi-account</v-icon>
+            <v-icon style="color: #F46036;">mdi-account</v-icon>
           </v-btn>
           
         </v-bottom-navigation>
 
-        <v-main>
+        <v-main class="uni-bkg">
         <v-container class="pa-0 overflow-hidden">
           <v-row no-gutters justify="center">
             <v-col sm="6" md="6" class="pa-0">
@@ -68,12 +68,10 @@
                     class="align-center text-center flex-row"
                   >
                     <div class="pa-5 pb-3">
-                      <p class="ma-0">203</p>
-                      <p class="ma-0">Followers</p> </div
-                    ><div class="pa-5 pb-3">
                       <p class="ma-0">7</p>
                       <p class="ma-0">Ideas</p> </div
-                    ><div class="pa-5 pb-3">
+                    >
+                    <div class="pa-5 pb-3">
                       <p class="ma-0">3</p>
                       <p class="ma-0">Reposts</p>
                     </div>
@@ -81,11 +79,7 @@
                   <v-row no-gutters justify="center" class="align-center">
                     <v-col cols="12" class="pa-5 pt-0 pb-0">
                       <v-card-title class="black--text pa-0">
-                        <v-avatar size="56">
-                          <img
-                            alt="user"
-                            src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
-                          />
+                        <v-avatar size="56" :style="'background:' + avatar">
                         </v-avatar>
                         <v-col class="pa-0 pl-3 d-inline">
                           <p class="ma-0 pa-0">{{first}} {{last}}</p>
@@ -251,6 +245,7 @@
       first: "",
       last: "",
       bio: "",
+      avatar: "",
       user_name: localStorage.getItem("user"),
       posts: [],
     };
@@ -259,6 +254,7 @@
     profileInfo () {
       var docRef = db.collection("users").doc(localStorage.getItem('user'));
         docRef.get().then((doc) => {
+            this.avatar = doc.data().avatarColor,
             this.first = doc.data().first,
             this.last = doc.data().last,
             this.bio = doc.data().bio
@@ -271,6 +267,7 @@
             querySnapshot.forEach((doc) =>
             this.posts.push({
               id: doc.id,
+
               caption: doc.data().caption,
               likes: doc.data().likes,
               timestamp: doc.data().timestamp,

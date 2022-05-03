@@ -38,7 +38,7 @@
           text
           @click="logout()"
           >
-          <v-icon>
+          <v-icon style="color: #F46036;">
             mdi-logout
           </v-icon>
           </v-btn>
@@ -52,23 +52,23 @@
           >    
             <v-btn href="direct-messages.html">
         
-              <v-icon color="white">mdi-inbox</v-icon>
+              <v-icon style="color: #F1F2EB;">mdi-inbox</v-icon>
             </v-btn>
 
             <v-btn href="feed.html" class="rounded-50">
-              <v-icon color="white">mdi-home</v-icon>
+              <v-icon style="color: #F46036;">mdi-home</v-icon>
             </v-btn>
 
             <v-btn href="my-profile.html">
               
-              <v-icon color="white">mdi-account</v-icon>
+              <v-icon style="color: #F1F2EB;">mdi-account</v-icon>
             </v-btn>
             
           </v-bottom-navigation>
           
 
 
-        <v-main class="mac">
+        <v-main class="uni-bkg">
           <v-container   class="pa-0 mt-1 overflow-hidden">
           <v-row>
               <v-col sm="6" md="6">
@@ -79,7 +79,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                           class="mb-5"
-                                id="add-post"
+                          style="background-color: #F46036;"
                                 
                                 small
                                 fixed
@@ -90,14 +90,14 @@
                                 v-bind="attrs"
                             v-on="on"
                               >
-                                <v-icon>mdi-plus</v-icon>
+                                <v-icon  style="color: #252627;">mdi-plus</v-icon>
                               </v-btn>
                         </template>
                         <template v-slot:default="dialog">
-                          <v-card>
+                          <v-card style="background-color: #F1F2EB;">
                             
-                            <v-toolbar>
-                              <h3 class="text-center">What's Your Idea?</h3>
+                            <v-toolbar style="background-color: #515052;">
+                              <h3 class="text-center" style="color: #F1F2EB;">What's Your Idea?</h3>
                             </v-toolbar>
                             <v-card-text class="pa-4 pb-1 pt-2">
                               <v-form>
@@ -137,7 +137,9 @@
                 <v-card elevation="0" class="rounded-0 mb-1" >
                   <div class="pa-5 card-styles">
                     <div class="d-flex flex-no-wrap pb-2">
-                      <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
+                      
+                      <v-avatar :style="'background:' + avatar" size="26" class="mr-1"></v-avatar>
+                      
                       <h3 class="ml-1">{{posts.username}}</h3>
                     </div>
                     <div>

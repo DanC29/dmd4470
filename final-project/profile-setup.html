@@ -31,53 +31,90 @@
   <body>
     <div id="profile-setup">
       <v-app>
-        <v-main>
-          <v-container fill-height fluid>
-            <v-row no-gutters justify="center" class="align-center">
-              <v-col sm="8" md="6">
+        <v-main class="uni-bkg align-center" >
+          <v-container overflow-hidden>
+            <v-row no-gutters justify="center">
+              <v-col sm="8" md="6" >
                 <v-card elevation="0">
-                  <v-form>
-                    <v-row class="d-flex flex-column pa-5">
-                      <v-col>
-                        <h1 class="text-center">Still Thinking</h1>
-                        <h3 class="text-center">Let's Get Brainstorming</h3>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
-                          id="first"
-                          type="text"
-                          v-model="first"
-                          placeholder="Firstname"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
-                          id="last"
-                          type="text"
-                          v-model="last"
-                          placeholder="Lastname"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
-                          id="bio"
-                          type="text"
-                          v-model="bio"
-                          placeholder="Bio"
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-btn block @click="profileDetails()" class="mr-2">
-                          <p class="ma-0 pl-2">Save Changes</p>
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-form>
+                  <div class="card-styles">
+                  <v-row>
+                    <v-col>
+                      <h1 class="text-center">Setup Profile</h1>
+                      <h3 class="text-center">You're Almost There!</h3>
+                    </v-col>
+                  </v-row>
+                  
+                    <v-form >
+                      <v-row justify="center" class="align-center pa-5 pb-0" no-gutters >
+                        <v-col class="shrink" cols="12"
+                        >
+                          <v-text-field
+                          
+                            v-model="color"
+                            hide-details
+                            class="ma-0 pa-0"
+                            
+                            outlined
+                          >
+                            <template v-slot:append>
+                              <v-menu
+                                v-model="menu"
+                                top
+                                nudge-bottom="105"
+                                nudge-left="16"
+                                :close-on-content-click="false"
+                              >
+                                <template v-slot:activator="{ on }">
+                                  <div :style="swatchStyle" v-on="on"  >
+                                </template>
+                                <v-card > 
+                                  <v-card-text class="pa-0">
+                                    <v-color-picker v-model="color" />
+                                  </v-card-text>
+                                </v-card>
+                              </v-menu>
+                            </template>
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row class="d-flex flex-column pa-5">
+                        <v-col class="pb-0 mb-0">
+                          <v-text-field
+                            id="first"
+                            type="text"
+                            v-model="first"
+                            placeholder="Firstname"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="pt-0 mt-0 pb-0 pb-0">
+                          <v-text-field
+                            id="last"
+                            type="text"
+                            v-model="last"
+                            placeholder="Lastname"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="pt-0 mt-0 pb-0 mb-0">
+                          <v-text-field
+                            id="bio"
+                            type="text"
+                            v-model="bio"
+                            placeholder="Bio"
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="pt-0 mt-0 pb-0 mb-0">
+                          <v-btn block @click="profileDetails()" class="mr-2" style="background-color: #F46036;">
+                            <p class="ma-0 pl-2">Save Changes</p>
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
@@ -96,11 +133,30 @@
         vuetify: new Vuetify(),
         data: function () {
           return {
+            color: "#1976D2FF",
+
+            menu: false,
+            // myAvatarColor: "",
             bio: "",
             first: "",
             last: "",
           };
         },
+
+        computed: {
+          swatchStyle() {
+            const { color, menu } = this;
+            return {
+              backgroundColor: color,
+              cursor: "pointer",
+              height: "30px",
+              width: "30px",
+              borderRadius: menu ? "50%" : "4px",
+              transition: "border-radius 200ms ease-in-out",
+            };
+          },
+        },
+
         methods: {
           profileDetails() {
             const userRef = db
@@ -112,6 +168,7 @@
                 first: document.getElementById("first").value,
                 last: document.getElementById("last").value,
                 bio: document.getElementById("bio").value,
+                avatarColor: this.color,
               })
               .then(() => {
                 console.log("Document successfully written!");
@@ -121,6 +178,24 @@
                 console.error("Error writing document: ", error);
               });
           },
+          /* userAvatar() {
+                const userRef = db
+                  .collection("users")
+                  .doc(localStorage.getItem("user"));
+
+                userRef
+                  .update({
+                    myAvatarColor: document.getElementById("avatar-color").value,
+                  })
+                  .then(() => {
+                    console.log(color);
+                    console.log("Document successfully written!");
+                    window.location.replace("feed.html");
+                  })
+                  .catch((error) => {
+                    console.error("Error writing document: ", error);
+                  });
+              }, */
         },
       });
     </script>

@@ -31,73 +31,81 @@
   <body>
     <div id="sign-in">
       <v-app>
-        <v-main>
+        <v-main class="uni-bkg">
           <v-container fill-height fluid>
             <v-row no-gutters justify="center" class="align-center">
               <v-col sm="8" md="6">
-                <v-card elevation="0">
-                  <v-form>
-                    <v-row class="d-flex flex-column pa-5">
-                      <v-col>
-                        <h1 class="text-center">WELCOME BACK</h1>
-                        <h3 class="text-center">What's On Your Mind?</h3>
-                      </v-col>
-                      <v-col class="pb-0 mb-0">
-                        <v-text-field
-                          id="username"
-                          type="text"
-                          v-model="username"
-                          placeholder="Username"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
-                          class="pt-0 mt-0"
-                          id="password"
-                          type="password"
-                          v-model="password"
-                          placeholder="Password"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-btn block class="mr-2" @click="signUserIn()">
-                          <p class="ma-0 pl-2">Sign In</p>
-                        </v-btn>
-                        <p class="mt-5">
-                          <a href="create-account.html" class="create-link"
-                            >Get Connected</a
+                <v-card elevation="0" class="card-styles">
+                  <div class="card-styles">
+                    <v-form>
+                      <v-row class="d-flex flex-column pa-5">
+                        <v-col>
+                          <h1 class="text-center">WELCOME BACK</h1>
+                          <h3 class="text-center">What's On Your Mind?</h3>
+                        </v-col>
+                        <v-col class="pb-0 mb-0">
+                          <v-text-field
+                            id="username"
+                            type="text"
+                            v-model="username"
+                            placeholder="Username"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col>
+                          <v-text-field
+                            class="pt-0 mt-0"
+                            id="password"
+                            type="password"
+                            v-model="password"
+                            placeholder="Password"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col>
+                          <v-btn
+                            block
+                            class="mr-2"
+                            @click="signUserIn()"
+                            style="background-color: #f46036"
                           >
-                        </p>
-                      </v-col>
-                      <!-- <v-col>
-                        <h3 class="text-center">Sign In With</h3>
-                      </v-col> -->
-                      <!-- <v-row class="flex-column">
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Google</p>
+                            <p class="ma-0 pl-2">Sign In</p>
                           </v-btn>
+                          <p class="mt-5">
+                            Need An Account?
+                            <a href="create-account.html" class="create-link"
+                              >Get Connected</a
+                            >
+                          </p>
                         </v-col>
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Facebook</p>
-                          </v-btn>
-                        </v-col>
-                        <v-col>
-                          <v-btn block class="ml-2">
-                            <v-icon> mdi-send </v-icon>
-                            <p class="ma-0 pl-2">Apple</p>
-                          </v-btn>
-                        </v-col>
-                      </v-row> -->
-                    </v-row>
-                  </v-form>
+                        <!-- <v-col>
+                          <h3 class="text-center">Sign In With</h3>
+                        </v-col> -->
+                        <!-- <v-row class="flex-column">
+                          <v-col>
+                            <v-btn block class="ml-2">
+                              <v-icon> mdi-send </v-icon>
+                              <p class="ma-0 pl-2">Google</p>
+                            </v-btn>
+                          </v-col>
+                          <v-col>
+                            <v-btn block class="ml-2">
+                              <v-icon> mdi-send </v-icon>
+                              <p class="ma-0 pl-2">Facebook</p>
+                            </v-btn>
+                          </v-col>
+                          <v-col>
+                            <v-btn block class="ml-2">
+                              <v-icon> mdi-send </v-icon>
+                              <p class="ma-0 pl-2">Apple</p>
+                            </v-btn>
+                          </v-col>
+                        </v-row> -->
+                      </v-row>
+                    </v-form>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>

@@ -31,73 +31,81 @@
   <body>
     <div id="sign-in">
       <v-app>
-        <v-main>
+        <v-main class="uni-bkg">
           <v-container fill-height fluid>
             <v-row no-gutters justify="center" class="align-center">
               <v-col sm="8" md="6">
                 <v-card elevation="0">
-                  <v-form>
-                    <v-row class="d-flex flex-column pa-5">
-                      <v-col>
-                        <h1 class="text-center">Still Thinking</h1>
-                        <h3 class="text-center">Let's Get Brainstorming</h3>
-                      </v-col>
-                      <v-col class="pb-0 mb-0">
-                        <v-text-field
-                          id="email"
-                          type="email"
-                          v-model="email"
-                          placeholder="Email"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col class="pb-0 mb-0 pt-0 mt-0">
-                        <v-text-field
-                          id="username"
-                          type="text"
-                          v-model="username"
-                          placeholder="Username"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col class="pt-0 mt-0">
-                        <v-text-field
-                          id="password"
-                          type="password"
-                          v-model="password"
-                          placeholder="Password"
-                          required
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <!-- <v-col>
-                        <v-text-field
-                          type="password"
-                          v-model="confirmPassword"
-                          placeholder="Confirm Password"
-                          :rules="[matchPasswords]"
-                          required
-                        ></v-text-field>
-                      </v-col> -->
+                  <div class="card-styles">
+                    <v-form>
+                      <v-row class="d-flex flex-column pa-5">
+                        <v-col>
+                          <h1 class="text-center">Still Thinking</h1>
+                          <h3 class="text-center">Let's Get Brainstorming</h3>
+                        </v-col>
+                        <v-col class="pb-0 mb-0">
+                          <v-text-field
+                            id="email"
+                            type="email"
+                            v-model="email"
+                            placeholder="Email"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="pb-0 mb-0 pt-0 mt-0">
+                          <v-text-field
+                            id="username"
+                            type="text"
+                            v-model="username"
+                            placeholder="Username"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="pt-0 mt-0">
+                          <v-text-field
+                            id="password"
+                            type="password"
+                            v-model="password"
+                            placeholder="Password"
+                            required
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                        <!-- <v-col>
+                          <v-text-field
+                            type="password"
+                            v-model="confirmPassword"
+                            placeholder="Confirm Password"
+                            :rules="[matchPasswords]"
+                            required
+                          ></v-text-field>
+                        </v-col> -->
 
-                      <!--                       <v-col>
-                        <v-text-field
-                          type="text"
-                          placeholder="Bio"
-                        ></v-text-field>
-                      </v-col> -->
-                      <v-col>
-                        <v-btn block class="mr-2" @click="createAccount()">
-                          <p class="ma-0 pl-2">Create Account</p>
-                        </v-btn>
-                        <p class="mt-5">
-                          <a href="index.html" class="create-link">Sign In</a>
-                        </p>
-                      </v-col>
-                    </v-row>
-                  </v-form>
+                        <!--                       <v-col>
+                          <v-text-field
+                            type="text"
+                            placeholder="Bio"
+                          ></v-text-field>
+                        </v-col> -->
+                        <v-col>
+                          <v-btn
+                            block
+                            class="mr-2"
+                            @click="createAccount()"
+                            style="background-color: #f46036"
+                          >
+                            <p class="ma-0 pl-2">Create Account</p>
+                          </v-btn>
+                          <p class="mt-5">
+                            Have An Account?
+                            <a href="index.html" class="create-link">Sign In</a>
+                          </p>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
@@ -158,7 +166,7 @@
               .doc(document.getElementById("username").value);
             userRef.get().then((docSnapshot) => {
               if (docSnapshot.exists) {
-                alert("Username taken. Please try another.");
+                alert("Username taken.");
               } else {
                 userRef
                   .set({

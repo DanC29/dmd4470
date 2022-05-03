@@ -9,14 +9,21 @@ var feedPage = new Vue({
       posts: [],
       likeIcon: "cards-heart-outline",
       likedIcon: "mdi-heart",
+      avatar: "",
     };
   },
 
   methods: {
+    profileInfo() {
+      var docRef = db.collection("users").doc(localStorage.getItem("user"));
+      docRef.get().then((doc) => {
+        this.avatar = doc.data().avatarColor;
+      });
+    },
     getPosts: function () {
       // get the tweets from the firestore database and prep them for display
       db.collection("posts")
-        .orderBy("timestamp")
+        .orderBy("timestamp", db.Desc)
         .onSnapshot((querySnapshot) => {
           this.posts = [];
           querySnapshot.forEach((doc) => {
@@ -28,6 +35,7 @@ var feedPage = new Vue({
               createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString(),
               username: doc.data().username,
+              avatar: doc.data().avatarColor,
             });
           });
         });
@@ -38,9 +46,10 @@ var feedPage = new Vue({
         .add({
           username: localStorage.getItem("user"),
           likes: [],
-          //id: this.posts.id,
+          id: this.posts.id,
           caption: this.posts.caption,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          dialog: false,
         })
         .then(() => {
           console.log("Document successfully written!");

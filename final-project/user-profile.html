@@ -32,15 +32,15 @@
     <div id="profile-page">
       <v-app>
         <!-- Must have the app property -->
-        <v-app-bar app>
+        <v-app-bar app id="feed-bar">
 
           <v-spacer> </v-spacer>
-          <v-toolbar-title>Steve G</v-toolbar-title>
+          <v-toolbar-title class="header-title">Steve G</v-toolbar-title>
           <v-spacer></v-spacer>
 
         </v-app-bar>
     
-        <v-bottom-navigation app
+        <v-bottom-navigation app id="feed-nav"
         >    
           <v-btn href="direct-messages.html">
       
@@ -58,7 +58,7 @@
           
         </v-bottom-navigation>
 
-        <v-main>
+        <v-main class="uni-bkg">
         <v-container class="pa-0 overflow-hidden">
           <v-row no-gutters justify="center">
             <v-col sm="6" md="6" class="pa-0">
