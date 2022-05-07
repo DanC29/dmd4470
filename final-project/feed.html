@@ -33,6 +33,9 @@
       <v-app>
         <!-- Must have the app property -->
         <v-app-bar app id="feed-bar">
+          <v-spacer> </v-spacer>
+          <v-toolbar-title><h3 class="header-title">Still Thinking</h3></v-toolbar-title>
+          <v-spacer></v-spacer>
           <v-btn
           color="white"
           text
@@ -41,10 +44,7 @@
           <v-icon style="color: #F46036;">
             mdi-logout
           </v-icon>
-          </v-btn>
-          <v-spacer> </v-spacer>
-          <v-toolbar-title><h3 class="header-title">Still Thinking</h3></v-toolbar-title>
-          <v-spacer></v-spacer>         
+          </v-btn>      
         </v-app-bar>
         
         
@@ -56,7 +56,7 @@
             </v-btn>
 
             <v-btn href="feed.html" class="rounded-50">
-              <v-icon style="color: #F46036;">mdi-home</v-icon>
+              <v-icon style="color: #508AA8;">mdi-home</v-icon>
             </v-btn>
 
             <v-btn href="my-profile.html">
@@ -109,7 +109,7 @@
                               </v-form>
                             </v-card-text>
                             <v-card-actions class="pa-4 pt-1">
-                              <v-btn @click="newPost()">
+                              <v-btn @click="newPost()"> 
                                 <v-icon> mdi-send </v-icon>
                                 <p class="ma-0 pl-2">Post</p>
                               </v-btn>
@@ -133,7 +133,7 @@
               justify="space-around"
               class="flex-column align-center"
             >
-              <v-col v-for="posts in posts" :key="posts.id" sm="6" md="4" >
+              <v-col v-for="posts in posts" :key="posts.id" sm="6" md="4">
                 <v-card elevation="0" class="rounded-0 mb-1" >
                   <div class="pa-5 card-styles">
                     <div class="d-flex flex-no-wrap pb-2">
@@ -149,24 +149,174 @@
                     </div>
                     <div>
                       <v-card-actions class="pa-0 pt-1">
-                        <v-btn icon class="ma-0 pa-0" @click="likePost(posts.id)">
-                          <v-icon> <!-- mdi-heart --> {{likeIcon}}</v-icon>
-                        </v-btn>
                         
-                        <!-- <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-repeat-variant </v-icon>
-                        </v-btn> -->
-                        <!-- <v-btn icon class="ma-0 pa-0">
-                          <v-icon> mdi-chat </v-icon>
-                        </v-btn> -->
+                         <v-btn @click="likePost(posts)" class="ma-0 pa-0" icon >
+                          <v-icon v-if="postStatus(posts)" style="color: #508AA8;">
+                            mdi-heart
+                          </v-icon>
+                          <v-icon v-else style="color: #508AA8;"> 
+                            mdi-heart-outline
+                          </v-icon> 
+                        </v-btn> 
+                        <span class="subheading mr-2" style="color:#242424">{{posts.likesNum}}</span>
+                        <v-dialog
+                        fullscreen
+                        hide-overlay
+                        transition="dialog-bottom-transition"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                          disabled
+                          icon
+                                @click="addCmt = !addCmt"
+                                v-bind="attrs"
+                            v-on="on"
+                              >
+                                <v-icon  style="color: #252627;">mdi-comment-outline</v-icon>
+                              </v-btn>
+                        </template>
+                        <template v-slot:default="addCmt">
+                          <v-card style="background-color: #F1F2EB;">
+                            
+                            <v-toolbar style="background-color: #515052;">
+                              <v-btn
+                                icon
+                                @click="addCmt.value = false"
+                              >
+                              <v-icon style="color: #F1F2EB;">mdi-chevron-left</v-icon>
+                              </v-btn>
+                              <v-spacer></v-spacer>
+                              <h3 class="text-center" style="color: #F1F2EB;">Comment</h3>
+                            </v-toolbar>
+                            <v-card-text>
+                              <v-container>
+                                <v-row>
+                                  <template v-for="(comment, index) in comments">
+                                    <v-card elevation="0" >
+                                      <div class="card-styles"> 
+                                        <v-list-item :key="item.id">
+                                          
+                                            <v-list-item-content class="pl-2">
+                                              <v-list-item-title
+                                                v-text="comment.username"
+                                              ></v-list-item-title>
+                    
+                                              <v-list-item-subtitle
+                                                v-text="comment.content"
+                                              ></v-list-item-subtitle>
+                                            </v-list-item-content>
+                                          
+                                        </v-list-item>
+                                      </div>
+                                      <v-divider
+                                       ></v-divider>
+                                    </v-card>
+                                    
+                                  </template>
+                                  <!-- <v-col v-for="(comment, index) in postComments">
+                                    
+                                    <v-list>
+                                      <v-list-item :key="comment.list" >
+                                        <v-list-item-content>
+                                          <v-list-item-subtitle>{{comment.username}}</v-list-item-subtitle>
+                                          <v-list-item-title>{{comment.commentText}}</v-list-item-title>
+                                        </v-list-item-content>
+                                      </v-list-item>
+                                    </v-list>
+                                  </v-col> -->
+                                </v-row>
+                              </v-container>
+                            </v-card-text>
+                            <v-bottom-navigation app height="auto">
+                              <v-container class="d-flex align-self-end">
+                                <v-row justify="center" class="flex-row align-center">
+                                  <v-col sm="6" md="6" class="align-self-end">
+                                    <v-form>
+                                      <v-text-field
+                                      type="text"
+                                      placeholder="Comment"
+                                      v-model="content"
+                                      ></v-text-field>
+                                    </v-form>
+                                  </v-col>
+                                  <v-btn text @click="addComment(data)">
+                                    <v-icon> mdi-send </v-icon>
+                                  </v-btn>
+                                </v-row>
+                              </v-container>
+                            </v-bottom-navigation>
+                          </v-card>
+                        </template>
+                      </v-dialog>
+                        <!-- <v-dialog
+                          v-model="addCmt"
+                          fullscreen
+                          hide-overlay
+                          transition="dialog-bottom-transition"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn 
+                            @click="addCmt = !addCmt"
+                            v-bind="attrs"
+                            v-on="on" icon>
+                              <v-icon>mdi-comment-outline</v-icon>
+                            </v-btn>
+                          </template>
+                          <template v-slot:default="addCmt">
+                            <v-card style="background-color: #F1F2EB;">
+                              <v-toolbar
+                              style="background-color: #515052;"
+                                dark
+                              >
+                                <v-btn
+                                  icon
+                                  @click="addCmt.value = false"
+                                  ><v-icon>mdi-chevron-left</v-icon>
+                                </v-btn>
+                                <v-spacer></v-spacer>
+                                <h3 class="text-center" style="color: #F1F2EB;">Add A Comment</h3>
+                              </v-toolbar>
+                                <v-container>
+                                  <v-row>
+                                    <v-col>
+                                      <v-list>
+                                        <v-list-item v-for="(comment, index) in comments" :key="comment.list">
+                                          <v-list-item-content>
+                                            <v-list-item-subtitle>{{comment.username}}</v-list-item-subtitle>
+                                            <v-list-item-title>{{comment.commentText}}</v-list-item-title>
+                                          </v-list-item-content>
+                                        </v-list-item>
+                                      </v-list>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                                <v-bottom-navigation app height="auto">
+                                  <v-container class="d-flex align-self-end">
+                                    <v-row justify="center" class="flex-row align-center">
+                                      <v-col sm="6" md="6" class="align-self-end">
+                                        <v-form>
+                                          <v-text-field
+                                          type="text"
+                                          placeholder="Comment"
+                                          v-model="commentText"
+                                          ></v-text-field>
+                                        </v-form>
+                                      </v-col>
+                                      <v-btn text @click="addComment(data)">
+                                        <v-icon> mdi-send </v-icon>
+                                      </v-btn>
+                                    </v-row>
+                                  </v-container>
+                                </v-bottom-navigation>
+                            </v-card>
+                          </template>
+                        </v-dialog> -->
                       </v-card-actions>
+                        
+                        
+                      
                     </div>
-                   <!--  <div>
-                      <v-btn text class="pa-0">
-                        <p class="mb-0 pt-1">View All Comments</p>
-                      </v-btn>
-                    </div> -->
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row pt-2">
                       <p class="mb-0 pr-2">{{posts.createdDate}}</p>
                       <p class="mb-0 pl-2">{{posts.createdTime}}</p>
                     </div>
@@ -175,6 +325,7 @@
                 </v-card>
               </v-col>
             </v-row>
+            
           </v-container>
           
         </v-main>
@@ -190,3 +341,5 @@
     <script src="script.js"></script>
   </body>
 </html>
+
+

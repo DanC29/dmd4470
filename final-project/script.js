@@ -6,10 +6,13 @@ var feedPage = new Vue({
     return {
       app_title: "Still Thinking",
       dialog: false,
+      addCmt: false,
       posts: [],
-      likeIcon: "cards-heart-outline",
-      likedIcon: "mdi-heart",
+      comments: [],
       avatar: "",
+      postLiked: false,
+
+      commentText: "",
     };
   },
 
@@ -22,21 +25,39 @@ var feedPage = new Vue({
     },
     getPosts: function () {
       // get the tweets from the firestore database and prep them for display
+
       db.collection("posts")
-        .orderBy("timestamp", db.Desc)
+        .orderBy("timestamp", "desc")
         .onSnapshot((querySnapshot) => {
           this.posts = [];
           querySnapshot.forEach((doc) => {
             this.posts.push({
               id: doc.id,
-              caption: doc.data().caption,
-              likes: doc.data().likes,
-              timestamp: doc.data().timestamp,
-              createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
-              createdTime: doc.data().timestamp.toDate().toLocaleTimeString(),
               username: doc.data().username,
               avatar: doc.data().avatarColor,
+
+              caption: doc.data().caption,
+
+              comments: doc.data().comments,
+
+              timestamp: doc.data().timestamp,
+              createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
+              createdTime: doc
+                .data()
+                .timestamp.toDate()
+                .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+
+              likes: doc.data().likes,
+              likesNum: doc.data().likes.length,
+              postLiked: doc.data().postLiked,
             });
+          });
+          this.posts.forEach(function (element) {
+            if (element.likes.indexOf(localStorage.getItem("user")) > -1) {
+              element["postLiked"] = true;
+            } else {
+              element["postLiked"] = false;
+            }
           });
         });
     },
@@ -45,41 +66,103 @@ var feedPage = new Vue({
       db.collection("posts")
         .add({
           username: localStorage.getItem("user"),
-          likes: [],
-          id: this.posts.id,
+          avatar: this.avatar,
+
           caption: this.posts.caption,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          dialog: false,
+
+          timestamp: new Date(),
+
+          comments: [],
+
+          likes: [],
+          likesNum: 0,
+          postLiked: false,
         })
         .then(() => {
           console.log("Document successfully written!");
+          console.log(this.avatar);
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
         });
     },
 
-    likePost: function (docID) {
-      var docRef = db.collection("posts").doc(docID);
-
-      this.likeIcon = this.likeIcon ? this.likedIcon : this.likeIcon;
-
-      // Set the "capital" field of the city 'DC'
-
-      //firebase.firestore.FieldValue.arrayUnion("joelsalisbury")
-
-      return docRef
-        .update({
-          likes: firebase.firestore.FieldValue.arrayUnion("joelsalisbury"),
-        })
-        .then(() => {
-          console.log("Document successfully updated!");
-        })
-        .catch((error) => {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
-        });
+    likePost: function (data) {
+      let docId = data.id;
+      var docRef = db.collection("posts").doc(docId);
+      if (data.likes.indexOf(localStorage.getItem("user")) > -1) {
+        return docRef
+          .update({
+            likes: firebase.firestore.FieldValue.arrayRemove(
+              localStorage.getItem("user")
+            ),
+            likesNum: data.likesNum - 1,
+            postLiked: false,
+          })
+          .then(() => {
+            console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      } else {
+        return docRef
+          .update({
+            likes: firebase.firestore.FieldValue.arrayUnion(
+              localStorage.getItem("user")
+            ),
+            likesNum: data.likesNum + 1,
+            postLiked: true,
+          })
+          .then(() => {
+            console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      }
     },
+    postStatus: function (data) {
+      return data.postLiked;
+    },
+
+    addComment: function (data) {
+      let docId = data.id;
+      var docRef = db.collection("posts").doc(docId);
+      if (data.comments.indexOf > -1) {
+        return docRef.update({
+          content: this.comment.content,
+          username: localStorage.getItem("user"),
+        });
+      }
+    },
+
+    /* getComments: function () {
+      db.collection("posts").onSnapshot((querySnapshot) => {
+        this.postComments = [];
+        querySnapshot.forEach((doc) => {
+          this.postComments.push({
+            id: doc.id,
+            username: doc.data().username,
+
+            comments: [
+              {
+                username: doc.data().username,
+                content: doc.data().content,
+              },
+            ],
+          });
+        });
+        this.posts.forEach(function (element) {
+          if (element.likes.indexOf(localStorage.getItem("user")) > -1) {
+            element["postLiked"] = true;
+          } else {
+            element["postLiked"] = false;
+          }
+        });
+      });
+    }, */
+
     logout: function () {
       localStorage.clear();
       window.location.replace("index.html");
@@ -87,6 +170,8 @@ var feedPage = new Vue({
   },
 
   mounted() {
+    this.profileInfo();
     this.getPosts();
+    //this.getComments();
   },
 });

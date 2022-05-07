@@ -171,6 +171,10 @@
                 avatarColor: this.color,
               })
               .then(() => {
+                localStorage.setItem(
+                      "avatarColor",
+                      this.color.value
+                    );
                 console.log("Document successfully written!");
                 window.location.replace("feed.html");
               })

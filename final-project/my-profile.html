@@ -37,6 +37,15 @@
           <v-spacer> </v-spacer>
           <v-toolbar-title class="header-title">{{user_name}}</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-btn
+          color="white"
+          text
+          @click="logout()"
+          >
+          <v-icon style="color: #F46036;">
+            mdi-logout
+          </v-icon>
+          </v-btn>
   
         </v-app-bar>
     
@@ -53,7 +62,7 @@
 
           <v-btn href="my-profile.html">
             
-            <v-icon style="color: #F46036;">mdi-account</v-icon>
+            <v-icon style="color: #508AA8;">mdi-account</v-icon>
           </v-btn>
           
         </v-bottom-navigation>
@@ -62,23 +71,9 @@
         <v-container class="pa-0 overflow-hidden">
           <v-row no-gutters justify="center">
             <v-col sm="6" md="6" class="pa-0">
-                  <v-row
-                    no-gutters
-                    justify="center"
-                    class="align-center text-center flex-row"
-                  >
-                    <div class="pa-5 pb-3">
-                      <p class="ma-0">7</p>
-                      <p class="ma-0">Ideas</p> </div
-                    >
-                    <div class="pa-5 pb-3">
-                      <p class="ma-0">3</p>
-                      <p class="ma-0">Reposts</p>
-                    </div>
-                  </v-row>
                   <v-row no-gutters justify="center" class="align-center">
                     <v-col cols="12" class="pa-5 pt-0 pb-0">
-                      <v-card-title class="black--text pa-0">
+                      <v-card-title class="pa-0" style="color: #F1F2EB;">
                         <v-avatar size="56" :style="'background:' + avatar">
                         </v-avatar>
                         <v-col class="pa-0 pl-3 d-inline">
@@ -89,6 +84,10 @@
                             </p>
                           </v-card-subtitle>
                         </v-col>
+                        <div class="pa-5 pb-3 text-center">
+                          <p class="ma-0">{{posts.length}}</p>
+                          <p class="ma-0">Ideas</p> </div
+                        >
                       </v-card-title>
                     </v-col>
                   </v-row>
@@ -103,6 +102,7 @@
                             >
                               <template v-slot:activator="{ on, attrs }">
                                 <v-btn
+                                style="background-color: #508AA8; color: #F1F2EB;"
                                   block
                                   v-bind="attrs"
                                   v-on="on"
@@ -113,7 +113,7 @@
                               </template>
                         
                               <v-card>
-                                <v-card-title class="text-h5 grey lighten-2">
+                                <v-card-title class="text-h5">
                                   Edit Profile
                                 </v-card-title>
                         
@@ -188,7 +188,8 @@
               <v-card elevation="0" class="rounded-0 mb-1" >
                 <div class="pa-5 card-styles">
                   <div class="d-flex flex-no-wrap pb-2">
-                    <v-avatar color="#8EA7A7" size="26" class="mr-1"></v-avatar>
+                    <v-avatar size="26" :style="'background:' + avatar" class="mr-1">
+                    </v-avatar>
                     <h3 class="ml-1">{{posts.username}}</h3>
                   </div>
                   <div>
@@ -198,23 +199,18 @@
                   </div>
                   <div>
                     <v-card-actions class="pa-0 pt-1">
-                      <v-btn icon class="ma-0 pa-0" @click="likePost(posts.id)">
-                        <v-icon> mdi-heart</v-icon>
-                      </v-btn>
-                      
-                      <!-- <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-repeat-variant </v-icon>
-                      </v-btn> -->
-                      <!-- <v-btn icon class="ma-0 pa-0">
-                        <v-icon> mdi-chat </v-icon>
-                      </v-btn> -->
-                    </v-card-actions>
+                      <v-btn @click="likePost(posts)" class="ma-0 pa-0" icon>
+                       <v-icon v-if="postStatus(posts)" style="color: #508AA8;">
+                         mdi-heart
+                       </v-icon>
+                       <v-icon v-else style="color: #508AA8;"> 
+                         mdi-heart-outline
+                       </v-icon> 
+                     </v-btn> 
+                     <span class="subheading mr-2" style="color:#242424">{{posts.likesNum}}</span>
+                   </v-card-actions>
                   </div>
-                 <!--  <div>
-                    <v-btn text class="pa-0">
-                      <p class="mb-0 pt-1">View All Comments</p>
-                    </v-btn>
-                  </div> -->
+                 
                   <div class="d-flex flex-row">
                     <p class="mb-0 pr-2">{{posts.createdDate}}</p>
                     <p class="mb-0 pl-2">{{posts.createdTime}}</p>
@@ -260,6 +256,7 @@
             this.bio = doc.data().bio
         })
     },
+    
     getUserPosts(){
         db.collection("posts").where("username", "==", localStorage.getItem('user'))
           .onSnapshot((querySnapshot) => {
@@ -267,16 +264,59 @@
             querySnapshot.forEach((doc) =>
             this.posts.push({
               id: doc.id,
+              username: doc.data().username,
+              avatar: doc.data().avatarColor,
 
               caption: doc.data().caption,
-              likes: doc.data().likes,
+
               timestamp: doc.data().timestamp,
               createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString(),
-              username: doc.data().username,
+
+              likes: doc.data().likes,
+              likesNum: doc.data().likes.length,
+              postLiked: doc.data().postLiked,
             }))
           })    
       },
+      likePost: function (data) {
+      let docId = data.id;
+      var docRef = db.collection("posts").doc(docId);
+      if (data.likes.indexOf(localStorage.getItem("user")) > -1) {
+        return docRef
+          .update({
+            likes: firebase.firestore.FieldValue.arrayRemove(
+              localStorage.getItem("user")
+            ),
+            likesNum: data.likesNum - 1,
+            postLiked: false,
+          })
+          .then(() => {
+            console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      } else {
+        return docRef
+          .update({
+            likes: firebase.firestore.FieldValue.arrayUnion(
+              localStorage.getItem("user")
+            ),
+            likesNum: data.likesNum + 1,
+            postLiked: true,
+          })
+          .then(() => {
+            console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      }
+    },
+    postStatus: function (data) {
+      return data.postLiked;
+    },
     saveProfile() {
       const userRef = db
               .collection("users")
@@ -295,6 +335,10 @@
               .catch((error) => {
                 console.error("Error writing document: ", error);
               });
+    },
+    logout: function () {
+      localStorage.clear();
+      window.location.replace("index.html");
     },
   },
   mounted() {

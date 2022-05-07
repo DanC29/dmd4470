@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,19 +37,22 @@
           <v-spacer> </v-spacer>
           <v-toolbar-title class="header-title">Messages</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-btn color="white" text @click="logout()">
+            <v-icon style="color: #f46036"> mdi-logout </v-icon>
+          </v-btn>
         </v-app-bar>
 
         <v-bottom-navigation app id="feed-nav">
           <v-btn href="direct-messages.html">
-            <v-icon style="color: #F46036;">mdi-inbox </v-icon>
+            <v-icon style="color: #508aa8">mdi-inbox </v-icon>
           </v-btn>
 
           <v-btn href="feed.html" class="rounded-50">
-            <v-icon style="color: #F1F2EB;">mdi-home </v-icon>
+            <v-icon style="color: #f1f2eb">mdi-home </v-icon>
           </v-btn>
 
           <v-btn href="my-profile.html">
-            <v-icon style="color: #F1F2EB;">mdi-account </v-icon>
+            <v-icon style="color: #f1f2eb">mdi-account </v-icon>
           </v-btn>
         </v-bottom-navigation>
 
@@ -56,7 +60,63 @@
           <v-container class="overflow-hidden">
             <v-row>
               <v-col cols="auto">
-                <v-dialog
+                <v-dialog transition="dialog-bottom-transition" max-width="600">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      class="mb-5"
+                      style="background-color: #f46036"
+                      small
+                      fixed
+                      bottom
+                      right
+                      fab
+                      @click="dialog = !dialog"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                    <v-icon  style="color: #252627;">mdi-message-plus-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <template v-slot:default="dialog">
+                    <v-card style="background-color: #F1F2EB;">
+                      <v-toolbar
+                      style="background-color: #515052;"
+                        dark
+                      ><h3 class="text-center" style="color: #F1F2EB;">Send A New Message</h3></v-toolbar>
+                      
+                      <v-card-text class="pa-4 pb-1 pt-2">
+                        <v-form>
+                          
+                          <v-overflow-btn
+                            class="my-2"
+                            :items="users"
+                            label="Send To"
+                            item-text="id"
+                            v-model="newMessage.to"
+                          ></v-overflow-btn>
+                          <v-text-field
+                          type="text"
+                          placeholder="Message"
+                          v-model="newMessage.message"
+                          ></v-text-field>
+                        </v-form>
+                      </v-card-text>
+                      <v-card-actions class="pa-4 pt-1">
+                        <v-btn text @click="newDM()">
+                          <v-icon> mdi-send </v-icon>
+                          <p class="ma-0 pl-2">Send</p>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          @click="dialog.value = false"
+                        ><v-icon >mdi-close-circle</v-icon>
+                        <p class="ma-0 pl-2">Close</p></v-btn></v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+                </v-dialog>
+                <!-- <v-dialog
                   transition="dialog-bottom-transition"
                   max-width="600"
                 >
@@ -74,7 +134,7 @@
                                 v-bind="attrs"
                                 v-on="on"
                               >
-                                <v-icon  style="color: #252627;">mdi-plus</v-icon>
+                                <v-icon  style="color: #252627;">mdi-message-plus-outline</v-icon>
                               </v-btn>
                   
                   </template>
@@ -87,22 +147,23 @@
                       
                       <v-card-text class="pa-4 pb-1 pt-2">
                         <v-form>
-                          <v-overflow-btn
-        class="my-2"
-        :items="dropdown_edit"
-        label="Send To"
-        
-        item-value="text"
-      ></v-overflow-btn>
-      <v-text-field
-      type="text"
-      placeholder="Message"
-      
-    ></v-text-field>
+                          
+                           <v-overflow-btn
+                            class="my-2"
+                            :items="users"
+                            label="Send To"
+                            item-text="id"
+                            v-model="new_message.to"
+                          ></v-overflow-btn>
+                          <v-text-field
+                          type="text"
+                          placeholder="Message"
+                          v-model="new_message.messageContent"
+                          ></v-text-field>
                         </v-form>
                       </v-card-text>
                       <v-card-actions class="pa-4 pt-1">
-                        <v-btn text>
+                        <v-btn text @click="newDM()">
                           <v-icon> mdi-send </v-icon>
                           <p class="ma-0 pl-2">Send</p>
                         </v-btn>
@@ -115,20 +176,117 @@
                       </v-card-actions>
                     </v-card>
                   </template>
-                </v-dialog>
+                </v-dialog> -->
               </v-col>
             </v-row>
-            <v-row justify="center">
+            <!-- TO -->
+            <v-row class="mt-2" >
+              <v-expansion-panels >
+                <v-expansion-panel  class="pt-2" style="background-color: #508aa8;"
+                >
+                  <v-expansion-panel-header >
+                    <div class="d-flex flex-row align-center">
+                      <h4 class="pr-4" style="color: #F1F2EB;">Sent Messages</h4>
+                      <v-icon style="color: #F1F2EB;">mdi-send</v-icon>
+                    </div>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-row class="d-flex flex-column">
+                      <v-col>
+                        <v-card
+                          class="mx-auto mt-5 mb-5"
+                          sm="6" md="6"
+                          v-for="items in messages"
+                          :key="items.id"
+                        >
+                          <v-card-actions class="pb-0">
+                            <v-card-text
+                              style="color: #515052;"
+                              class="pl-2 pb-1 pt-2"
+                            >
+                              @{{items.to}}
+                            </v-card-text>
+                            <!-- <v-card-text
+                              class="pt-1 pb-1"
+                              style="color: #949494; text-align: right"
+                            >
+                              {{items.timestamp}}
+                            </v-card-text> -->
+                          </v-card-actions>
+        
+                          <v-card-text
+                            style="color: #242424"
+                            class="text-p font-weight-bold pb-2 pt-1"
+                          >
+                            {{items.message}}
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
+
+            <!-- FROM -->
+            <v-row class="mt-2">
+              <v-expansion-panels>
+                <v-expansion-panel style="background-color: #f46036;"
+                >
+                  <v-expansion-panel-header >
+                    <div class="d-flex flex-row align-center">
+                      <h4 class="pr-4" style="color: #252627;">Inbox</h4>
+                      <v-icon style="color: #252627;">mdi-inbox</v-icon>
+                    </div>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-row class="d-flex flex-column">
+                      <v-col>
+                        <v-card
+                          class="mx-auto mt-5 mb-5"
+                          max-width="600"
+                          v-for="(item, index) in fromMessages"
+                          :key="item.id"
+                        >
+                          <v-card-actions>
+                            <v-card-text
+                            style="color: #515052;"
+                            class="pl-2 pb-1 pt-2"
+                            >
+                              @{{item.from}}
+                            </v-card-text>
+                            <!-- <v-card-text
+                              class="pt-0 pb-0"
+                              style="color: #949494; text-align: right"
+                            >
+                              {{item.timestamp}}
+                            </v-card-text> -->
+                          </v-card-actions>
+        
+                          <v-card-text
+                          style="color: #252627"
+                            class="text-p font-weight-bold pb-2 pt-1"
+                          >
+                            {{item.message}}
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
+            <!-- <v-row justify="center">
               <v-dialog
                 v-model="dialog"
                 fullscreen
                 hide-overlay
                 transition="dialog-bottom-transition"
               >
-                <template v-slot:activator="{ on, attrs }" v-for="(item, index) in items">
+                <template v-slot:activator="{ on, attrs }" v-for="(item, index) in messages">
                   <v-card elevation="0" >
                     <div class="card-styles"> 
-                      <v-list-item :key="item.title" v-bind="attrs" v-on="on">
+                      <v-list-item :key="item.id" v-bind="attrs" v-on="on">
                         <template v-slot:default="{ active }">
                           <v-avatar size="45">
                             <img
@@ -138,16 +296,16 @@
                           </v-avatar>
                           <v-list-item-content class="pl-2">
                             <v-list-item-title
-                              v-text="item.username"
+                              v-text="item.from"
                             ></v-list-item-title>
   
                             <v-list-item-subtitle
-                              v-text="item.messagePreview"
+                              v-text="item.messageContent"
                             ></v-list-item-subtitle>
                           </v-list-item-content>
   
                           <v-list-item-action>
-                            <v-list-item-action-text
+                             <v-list-item-action-text
                               v-text="item.timestamp"
                             ></v-list-item-action-text>
   
@@ -163,7 +321,7 @@
                   </v-card>
                     
                   </v-card>
-                  <!-- <v-list two-line>
+                  <v-list two-line>
                     <v-list-item-group>
                       <template v-for="(item, index) in items">
                         <v-list-item :key="item.title" v-bind="attrs" v-on="on">
@@ -202,14 +360,14 @@
                         ></v-divider>
                       </template>
                     </v-list-item-group>
-                  </v-list> -->
+                  </v-list> 
                 </template>
                 <v-card>
                   <v-toolbar dark color="primary">
                     <v-btn icon dark @click="dialog = false">
                       <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Settings</v-toolbar-title>
+                    <v-toolbar-title>Messages</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                       <v-btn dark text @click="dialog = false"> Save </v-btn>
@@ -264,7 +422,7 @@
                   </v-container>
                 </v-card>
               </v-dialog>
-            </v-row>
+            </v-row> -->
           </v-container>
         </v-main>
       </v-app>
@@ -280,44 +438,124 @@
         vuetify: new Vuetify(),
         data: function () {
           return {
-            dropdown_edit: [
-        { text: '100%' },
-        { text: '75%' },
-        { text: '50%' },
-        { text: '25%' },
-        { text: '0%' },
-      ],
+            to: "",
+            from: "",
+            users: [],
+            messages: [],
+            fromMessages: [],
+            i: [],
             newMessage: false,
             dialog: false,
-            user_name: "John Doe",
-            /* selected: [2], */
+            newMessage: {
+            to: "",
+            from: "",
+            message: "",
+            timestamp: "",
+            avatar: ""
+            },
             items: [
-              {
-                timestamp: "15 min",
-                messagePreview: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-                username: "Ali Connors",
-              },
+            ],
+            item: [
             ],
           };
         },
         methods: {
-          newDM: function () {
-      db.collection("messages")
-        .add({
-          username: localStorage.getItem("user"),
-          id: this.posts.id,
-          message: this.posts.caption,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-        .then(() => {
-          console.log("Document successfully written!");
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
+          usersList: function () {
+            db.collection("users")
+              .get()
+              .then((querySnapshot) => {
+                this.users = [];
+                querySnapshot.forEach((doc) => {
+                  this.users.push({
+                    id: doc.id,
+                    username: doc.data().username,
+                  });
+                });
+              });
+          }, 
+         
+          getSentMessages(){
+      db.collection("messages").where("from", "==", localStorage.getItem('user'))
+      .onSnapshot((querySnapshot) => {
+        this.messages = []
+        querySnapshot.forEach((doc) =>
+        this.messages.push({
+          timestamp:(doc.data().timestamp).toDate().toDateString(),
+          message:doc.data().message,
+          to: doc.data().to,
+          id:doc.id,
+          avatar:doc.data().avatar
+        }))
+      })
+      
     },
+    
+    getIncomingMessages(){
+      db.collection("messages").where("to", "==", localStorage.getItem('user'))
+      .onSnapshot((querySnapshot) => {
+        this.fromMessages = []
+        querySnapshot.forEach((doc) =>
+        this.fromMessages.push({
+          timestamp:(doc.data().timestamp).toDate().toDateString(),
+          message:doc.data().message,
+          from:doc.data().from,
+          id:doc.id,
+          avatar:doc.data().avatar
+        }))
+      })   
+    },
+    newDM: function () {
+      
+      if (this.newMessage.to.length > 0){
+  const usersRef = db.collection("users").doc(this.newMessage.to)
+  usersRef.get()
+  .then ((docSnapshot) => {
+      if (docSnapshot.exists){
+          if (this.newMessage.message.length > 0){
+              db.collection("messages").add({
+                timestamp: new Date(),
+                message: this.newMessage.message,
+                to: this.newMessage.to,
+                from: localStorage.getItem("user"),
+                avatar: localStorage.getItem("avatarColor"),
+              })
+              .then(() => {
+                  console.log("Document successfully written!");
+                  this.newMessage.to=""
+                  this.newMessage.message = ""
+              })
+              .catch((error) => {
+                  console.error("Error writing document: ", error);
+              });
+              }
+              else{
+                  alert("You Need To Type Something!!!")
+              }
+              
+      }
+      else{
+          alert("Who Are You Trying To Message?")
+      }
+  })
+  }
+  else{
+      alert("No User Found!")
+  }
+    },
+
+          logout: function () {
+            localStorage.clear();
+            window.location.replace("index.html");
+          },
+        },
+        mounted() {
+          this.usersList();
+          this.getSentMessages();
+          this.getIncomingMessages();
         },
       });
+      
     </script>
   </body>
 </html>
+
